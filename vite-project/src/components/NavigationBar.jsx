@@ -12,8 +12,8 @@ const NavigationBar = ({ activeSection, scrollToSection, darkMode, setDarkMode }
   ];
 
   return (
-    <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-40">
-      <div className={`flex items-center gap-2 p-2 rounded-2xl shadow-2xl backdrop-blur-lg ${
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40">
+      <div className={`flex items-center gap-2 p-1.5 rounded-2xl shadow-2xl backdrop-blur-lg ${
         darkMode ? 'bg-gray-800/90' : 'bg-white/90'
       } border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
         {sections.map(({ id, label, icon: Icon }) => (
@@ -35,7 +35,7 @@ const NavigationBar = ({ activeSection, scrollToSection, darkMode, setDarkMode }
         
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className={`p-3 rounded-xl transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 group`}
+          className={`p-2.5 rounded-xl transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 group`}
           title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
           {darkMode ? '☀️' : '🌙'}
