@@ -130,7 +130,7 @@ const Portfolio = () => {
             <AnimatedCloud />
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-              Hi, I'm <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Your Name</span>
+              Hi, I'm <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Aadi Jain</span>
             </h1>
             
             <p className="text-xl md:text-2xl mb-6 text-white font-light bg-black/30 backdrop-blur-sm p-4 rounded-2xl inline-block">
@@ -138,7 +138,7 @@ const Portfolio = () => {
             </p>
             
             <p className="text-lg mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed bg-black/30 backdrop-blur-sm p-6 rounded-2xl">
-              Passionate about building scalable cloud solutions and creating exceptional digital experiences
+              Building reliable cloud architectures and intuitive full-stack solutions.
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -149,7 +149,7 @@ const Portfolio = () => {
                 Get In Touch
               </button>
               <a
-                href="#"
+                href="public/CA.pdf" download
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 flex items-center gap-2 hover:shadow-lg text-white hoverable"
               >
                 <Download size={20} /> Download CV
@@ -202,9 +202,9 @@ const Portfolio = () => {
         {/* Journey Timeline with restored animation and blur effect */}
         <section id="journey" className="py-20 px-4 relative">
           {/* Background blur container - only behind the timeline */}
-          <div className="absolute inset-0 overflow-hidden">
+          {/* <div className="absolute inset-0 overflow-hidden">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-blue-500/10 to-purple-600/10 backdrop-blur-xl rounded-3xl"></div>
-          </div>
+          </div> */}
           
           <div className="max-w-4xl mx-auto relative z-10" ref={journeyRef}>
             <h2 className="text-4xl font-bold text-center mb-16">
@@ -252,31 +252,31 @@ const Portfolio = () => {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold">
-                    YN
+                    AJ
                   </div>
-                  <h3 className="text-2xl font-bold text-center mb-4">Your Name</h3>
+                  <h3 className="text-2xl font-bold text-center mb-4">Aadi Jain</h3>
                   <p className="text-gray-400 text-center mb-6">
                     Cloud Engineer & Software Developer
                   </p>
                 </div>
                 <div>
                   <p className="text-gray-300 leading-relaxed mb-6">
-                    I'm a passionate 3rd year B.Tech CSE student specializing in Cloud Computing and DevOps. 
-                    I love building scalable, efficient solutions that solve real-world problems. With expertise 
-                    in AWS, Kubernetes, and modern development practices, I'm always eager to take on new challenges 
-                    and learn cutting-edge technologies.
+                    I’m a 3rd-year Computer Science student who loves turning ideas into scalable, 
+                    cloud-powered systems. From AWS and Kubernetes to Java backend development, 
+                    I enjoy crafting solutions that are efficient, reliable, and meaningful. 
+                    Always learning. Always building.
                   </p>
                   <div className="flex justify-center gap-6">
-                    <a href="#" className="group p-4 rounded-full bg-gray-700 hover:bg-green-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
+                    <a href="https://github.com/Aadi1903" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-green-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Github size={24} className="text-white" />
                     </a>
-                    <a href="#" className="group p-4 rounded-full bg-gray-700 hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
+                    <a href="https://www.linkedin.com/in/aadi-jain01/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Linkedin size={24} className="text-white" />
                     </a>
-                    <a href="#" className="group p-4 rounded-full bg-gray-700 hover:bg-red-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
+                    <a href="mailto:aadiijain03@gmail.com" className="group p-4 rounded-full bg-gray-700 hover:bg-red-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Mail size={24} className="text-white" />
                     </a>
-                    <a href="#" className="group p-4 rounded-full bg-gray-700 hover:bg-orange-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
+                    <a href="https://leetcode.com/u/Aadi0324/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-orange-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Code size={24} className="text-white" />
                     </a>
                   </div>
@@ -286,64 +286,89 @@ const Portfolio = () => {
           </div>
         </section>
 
-        <section id="contact" className="py-20 px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-16">
-              Get In <span className="text-blue-500">Touch</span>
-            </h2>
-            <div className={`${cardBg} p-8 rounded-2xl shadow-xl border ${
-              darkMode ? 'border-gray-700' : 'border-gray-200'
-            }`}>
-              <div className="space-y-6">
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Name</label>
-                  <input
-                    type="text"
-                    className={`w-full px-4 py-4 rounded-xl ${
-                      darkMode ? 'bg-gray-700' : 'bg-gray-100'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Email</label>
-                  <input
-                    type="email"
-                    className={`w-full px-4 py-4 rounded-xl ${
-                      darkMode ? 'bg-gray-700' : 'bg-gray-100'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Message</label>
-                  <textarea
-                    rows="6"
-                    className={`w-full px-4 py-4 rounded-xl ${
-                      darkMode ? 'bg-gray-700' : 'bg-gray-100'
-                    } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 resize-none`}
-                    placeholder="Your message..."
-                  ></textarea>
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert('Contact form submitted! (Connect your email service here)');
-                  }}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg hoverable"
-                >
-                  Send Message
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
+       <section id="contact" className="py-20 px-4">
+  <div className="max-w-2xl mx-auto">
+    <h2 className="text-4xl font-bold text-center mb-16">
+      Get In <span className="text-blue-500">Touch</span>
+    </h2>
+
+    <div
+      className={`${cardBg} p-8 rounded-2xl shadow-xl border ${
+        darkMode ? "border-gray-700" : "border-gray-200"
+      }`}
+    >
+      {/* Web3Forms FORM START */}
+      <form
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        className="space-y-6"
+      >
+        {/* REQUIRED HIDDEN ACCESS KEY */}
+        <input
+          type="hidden"
+          name="access_key"
+          value="950c6c6e-ae89-419a-adaf-9a0629049476"
+        />
+
+        <div>
+          <label className="block mb-3 font-semibold text-lg">Name</label>
+          <input
+            type="text"
+            name="name"
+            required
+            className={`w-full px-4 py-4 rounded-xl ${
+              darkMode ? "bg-gray-700" : "bg-gray-100"
+            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
+            placeholder="Your name"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-3 font-semibold text-lg">Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            className={`w-full px-4 py-4 rounded-xl ${
+              darkMode ? "bg-gray-700" : "bg-gray-100"
+            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
+            placeholder="your.email@example.com"
+          />
+        </div>
+
+        <div>
+          <label className="block mb-3 font-semibold text-lg">Message</label>
+          <textarea
+            rows="6"
+            name="message"
+            required
+            className={`w-full px-4 py-4 rounded-xl ${
+              darkMode ? "bg-gray-700" : "bg-gray-100"
+            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 resize-none`}
+            placeholder="Your message..."
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg hoverable"
+        >
+          Send Message
+        </button>
+      </form>
+      {/* Web3Forms FORM END */}
+
+    </div>
+  </div>
+</section>
+
+
 
         <footer className={`${cardBg} py-8 text-center border-t ${
           darkMode ? 'border-gray-700' : 'border-gray-200'
         }`}>
           <p className="text-gray-400">
-            © 2025 Your Name. Built with React & Tailwind CSS
+            © 2025 Aadi Jain. Built with React & Tailwind CSS
           </p>
         </footer>
       </div>
