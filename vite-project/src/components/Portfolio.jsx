@@ -163,6 +163,7 @@ const Portfolio = () => {
             <h2 className="text-4xl font-bold text-center mb-16">
               Technical <span className="text-blue-500">Expertise</span>
             </h2>
+            
             <div className="grid lg:grid-cols-3 gap-8">
               {skills.map((skillCategory, categoryIdx) => (
                 <div
@@ -251,9 +252,12 @@ const Portfolio = () => {
             }`}>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
-                  <div className="w-32 h-32 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold">
-                    AJ
-                  </div>
+                  <img
+                src="logo.png"
+                alt="Aadi Jain"
+                className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-2 border-white shadow-md"
+/>
+
                   <h3 className="text-2xl font-bold text-center mb-4">Aadi Jain</h3>
                   <p className="text-gray-400 text-center mb-6">
                     Cloud Engineer & Software Developer
@@ -279,8 +283,10 @@ const Portfolio = () => {
                     <a href="https://leetcode.com/u/Aadi0324/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-orange-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Code size={24} className="text-white" />
                     </a>
+                    
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -360,6 +366,7 @@ const Portfolio = () => {
 
     </div>
   </div>
+  
 </section>
 
 

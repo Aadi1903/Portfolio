@@ -1,4 +1,4 @@
-import { Cloud, Boxes, Cpu, Zap, Code, FileCode, Wrench, Database, Star, Terminal, GraduationCap, Book, Notebook, Container } from 'lucide-react';
+import { Cloud, Boxes, Cpu, Zap, Code, Briefcase, FileCode, Wrench, Database, Star, Terminal, GraduationCap, Book, Notebook, Container } from 'lucide-react';
 
 export const skills = [
   { 
@@ -80,8 +80,8 @@ features: [
 ];
 
 export const journey = [
-  { year: '2025', title: 'Pre-Final Year & Technical Growth', desc: 'Focused on building scalable cloud solutions and strengthening Java backend skills.', icon: Cloud },
-  { year: '2023', title: 'Started B.Tech in CSE', desc: 'Began my engineering journey with growing interest in cloud technologies.', icon: GraduationCap },
-  { year: '2023', title: 'Completed Intermediate', desc: 'Started exploring coding, technology basics, and computer fundamentals.', icon: Notebook  },
-  { year: '2020', title: 'Completed High School', desc: 'Developed curiosity for computers and technology.', icon: Book }
+  { year: 'Nov 2025', title: 'Pre-Final Year & Infosys Intern', desc: 'Simultaneously pursuing academic growth while interning at Infosys Springboard, focusing on Java, Spring Boot, and Web development.', icon: Cloud },
+  { year: 'Aug 2023', title: 'Started B.Tech in CSE', desc: 'Began my engineering journey with growing interest in cloud technologies.', icon: GraduationCap },
+  { year: 'Apr 2023', title: 'Completed Intermediate', desc: 'Started exploring coding, technology basics, and computer fundamentals.', icon: Notebook  },
+  { year: 'Mar 2020', title: 'Completed High School', desc: 'Developed curiosity for computers and technology.', icon: Book }
 ];
