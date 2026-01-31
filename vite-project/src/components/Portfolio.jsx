@@ -112,12 +112,12 @@ const Portfolio = () => {
       <Preloader loading={loading} />
       <ScrollProgress />
       <CustomCursor />
-      
+
       <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-300 relative overflow-hidden cursor-none`}>
         <ThreeDBackground />
         <FloatingIcons />
 
-        <NavigationBar 
+        <NavigationBar
           activeSection={activeSection}
           scrollToSection={scrollToSection}
           darkMode={darkMode}
@@ -128,19 +128,19 @@ const Portfolio = () => {
         <section id="home" className="min-h-screen flex items-center justify-center relative">
           <div className="relative z-10 text-center px-4 max-w-4xl">
             <AnimatedCloud />
-            
+
             <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
               Hi, I'm <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Aadi Jain</span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl mb-6 text-white font-light bg-black/30 backdrop-blur-sm p-4 rounded-2xl inline-block">
               Cloud Engineer & Full Stack Developer
             </p>
-            
-            <p className="text-lg mb-8 text-gray-300 max-w-2xl mx-auto leading-relaxed bg-black/30 backdrop-blur-sm p-6 rounded-2xl">
+
+            <p className="text-lg mb-8 text-gray-300 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed bg-black/30 backdrop-blur-sm p-6 rounded-2xl">
               Building reliable cloud architectures and intuitive full-stack solutions.
             </p>
-            
+
             <div className="flex flex-wrap justify-center gap-4 mb-12">
               <button
                 onClick={() => scrollToSection('contact')}
@@ -163,14 +163,13 @@ const Portfolio = () => {
             <h2 className="text-4xl font-bold text-center mb-16">
               Technical <span className="text-blue-500">Expertise</span>
             </h2>
-            
+
             <div className="grid lg:grid-cols-3 gap-8">
               {skills.map((skillCategory, categoryIdx) => (
                 <div
                   key={categoryIdx}
-                  className={`${cardBg} p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border ${
-                    darkMode ? 'border-gray-700' : 'border-gray-200'
-                  }`}
+                  className={`${cardBg} p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border ${darkMode ? 'border-gray-700' : 'border-gray-200'
+                    }`}
                 >
                   <h3 className="text-xl font-bold mb-6 text-blue-500 text-center">
                     {skillCategory.category}
@@ -206,22 +205,22 @@ const Portfolio = () => {
           {/* <div className="absolute inset-0 overflow-hidden">
             <div className="absolute left-1/2 transform -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-blue-500/10 to-purple-600/10 backdrop-blur-xl rounded-3xl"></div>
           </div> */}
-          
+
           <div className="max-w-4xl mx-auto relative z-10" ref={journeyRef}>
             <h2 className="text-4xl font-bold text-center mb-16">
               My <span className="text-blue-500">Journey</span>
             </h2>
             <div className="relative">
               {/* Central line with animation */}
-              <div 
+              <div
                 ref={lineRef}
                 className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-600 transition-transform duration-300"
                 style={{ transformOrigin: 'top', transform: 'scaleY(0)' }}
               ></div>
-              
+
               {journey.map((item, idx) => (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className={`mb-12 flex ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center animate-slide-in-up`}
                   style={{ animationDelay: `${idx * 0.2}s` }}
                 >
@@ -229,12 +228,11 @@ const Portfolio = () => {
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full border-4 border-gray-900 flex items-center justify-center z-10 shadow-lg">
                     <item.icon size={20} className="text-white" />
                   </div>
-                  <div className={`w-1/2 ${cardBg} p-6 rounded-2xl shadow-lg border ${
-                    darkMode ? 'border-gray-700' : 'border-gray-200'
-                  } ${idx % 2 === 0 ? 'ml-8' : 'mr-8'} transform hover:scale-105 transition-transform duration-300 backdrop-blur-md`}>
+                  <div className={`w-1/2 ${cardBg} p-6 rounded-2xl shadow-lg border ${darkMode ? 'border-gray-700' : 'border-gray-200'
+                    } ${idx % 2 === 0 ? 'ml-8' : 'mr-8'} transform hover:scale-105 transition-transform duration-300 backdrop-blur-md`}>
                     <div className="text-blue-500 font-bold text-lg mb-2">{item.year}</div>
-                    <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                    <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-xl font-bold mb-2 dark:text-gray-200">{item.title}</h3>
+                    <p className="text-gray-400 dark:text-gray-300 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -247,27 +245,26 @@ const Portfolio = () => {
             <h2 className="text-4xl font-bold text-center mb-16">
               About <span className="text-blue-500">Me</span>
             </h2>
-            <div className={`${cardBg} rounded-2xl shadow-xl p-8 border ${
-              darkMode ? 'border-gray-700' : 'border-gray-200'
-            }`}>
+            <div className={`${cardBg} rounded-2xl shadow-xl p-8 border ${darkMode ? 'border-gray-700' : 'border-gray-200'
+              }`}>
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div>
                   <img
-                src="logo.png"
-                alt="Aadi Jain"
-                className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-2 border-white shadow-md"
-/>
+                    src="logo.png"
+                    alt="Aadi Jain"
+                    className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-2 border-white shadow-md"
+                  />
 
-                  <h3 className="text-2xl font-bold text-center mb-4">Aadi Jain</h3>
-                  <p className="text-gray-400 text-center mb-6">
+                  <h3 className="text-2xl font-bold text-center mb-4 dark:text-gray-100">Aadi Jain</h3>
+                  <p className="text-gray-400 dark:text-gray-300 text-center mb-6">
                     Cloud Engineer & Software Developer
                   </p>
                 </div>
                 <div>
-                  <p className="text-gray-300 leading-relaxed mb-6">
-                    I’m a 3rd-year Computer Science student who loves turning ideas into scalable, 
-                    cloud-powered systems. From AWS and Kubernetes to Java backend development, 
-                    I enjoy crafting solutions that are efficient, reliable, and meaningful. 
+                  <p className="text-gray-300 dark:text-gray-200 leading-relaxed mb-6">
+                    I’m a 3rd-year Computer Science student who loves turning ideas into scalable,
+                    cloud-powered systems. From AWS and Kubernetes to Java backend development,
+                    I enjoy crafting solutions that are efficient, reliable, and meaningful.
                     Always learning. Always building.
                   </p>
                   <div className="flex justify-center gap-6">
@@ -283,97 +280,92 @@ const Portfolio = () => {
                     <a href="https://leetcode.com/u/Aadi0324/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-orange-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
                       <Code size={24} className="text-white" />
                     </a>
-                    
+
                   </div>
                 </div>
-                
+
               </div>
             </div>
           </div>
         </section>
 
-       <section id="contact" className="py-20 px-4">
-  <div className="max-w-2xl mx-auto">
-    <h2 className="text-4xl font-bold text-center mb-16">
-      Get In <span className="text-blue-500">Touch</span>
-    </h2>
+        <section id="contact" className="py-20 px-4">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold text-center mb-16">
+              Get In <span className="text-blue-500">Touch</span>
+            </h2>
 
-    <div
-      className={`${cardBg} p-8 rounded-2xl shadow-xl border ${
-        darkMode ? "border-gray-700" : "border-gray-200"
-      }`}
-    >
-      {/* Web3Forms FORM START */}
-      <form
-        action="https://api.web3forms.com/submit"
-        method="POST"
-        className="space-y-6"
-      >
-        {/* REQUIRED HIDDEN ACCESS KEY */}
-        <input
-          type="hidden"
-          name="access_key"
-          value="950c6c6e-ae89-419a-adaf-9a0629049476"
-        />
+            <div
+              className={`${cardBg} p-8 rounded-2xl shadow-xl border ${darkMode ? "border-gray-700" : "border-gray-200"
+                }`}
+            >
+              {/* Web3Forms FORM START */}
+              <form
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                className="space-y-6"
+              >
+                {/* REQUIRED HIDDEN ACCESS KEY */}
+                <input
+                  type="hidden"
+                  name="access_key"
+                  value="950c6c6e-ae89-419a-adaf-9a0629049476"
+                />
 
-        <div>
-          <label className="block mb-3 font-semibold text-lg">Name</label>
-          <input
-            type="text"
-            name="name"
-            required
-            className={`w-full px-4 py-4 rounded-xl ${
-              darkMode ? "bg-gray-700" : "bg-gray-100"
-            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-            placeholder="Your name"
-          />
-        </div>
+                <div>
+                  <label className="block mb-3 font-semibold text-lg">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
+                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
+                    placeholder="Your name"
+                  />
+                </div>
 
-        <div>
-          <label className="block mb-3 font-semibold text-lg">Email</label>
-          <input
-            type="email"
-            name="email"
-            required
-            className={`w-full px-4 py-4 rounded-xl ${
-              darkMode ? "bg-gray-700" : "bg-gray-100"
-            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-            placeholder="your.email@example.com"
-          />
-        </div>
+                <div>
+                  <label className="block mb-3 font-semibold text-lg">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
+                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
+                    placeholder="your.email@example.com"
+                  />
+                </div>
 
-        <div>
-          <label className="block mb-3 font-semibold text-lg">Message</label>
-          <textarea
-            rows="6"
-            name="message"
-            required
-            className={`w-full px-4 py-4 rounded-xl ${
-              darkMode ? "bg-gray-700" : "bg-gray-100"
-            } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 resize-none`}
-            placeholder="Your message..."
-          ></textarea>
-        </div>
+                <div>
+                  <label className="block mb-3 font-semibold text-lg">Message</label>
+                  <textarea
+                    rows="6"
+                    name="message"
+                    required
+                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
+                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 resize-none`}
+                    placeholder="Your message..."
+                  ></textarea>
+                </div>
 
-        <button
-          type="submit"
-          className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg hoverable"
-        >
-          Send Message
-        </button>
-      </form>
-      {/* Web3Forms FORM END */}
+                <button
+                  type="submit"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg hoverable"
+                >
+                  Send Message
+                </button>
+              </form>
+              {/* Web3Forms FORM END */}
 
-    </div>
-  </div>
-  
-</section>
+            </div>
+          </div>
+
+        </section>
 
 
 
-        <footer className={`${cardBg} py-8 text-center border-t ${
-          darkMode ? 'border-gray-700' : 'border-gray-200'
-        }`}>
+        <footer className={`${cardBg} py-8 text-center border-t ${darkMode ? 'border-gray-700' : 'border-gray-200'
+          }`}>
           <p className="text-gray-400">
             © 2025 Aadi Jain. Built with React & Tailwind CSS
           </p>

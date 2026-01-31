@@ -29,7 +29,7 @@ const ProjectCarousel = ({ projects, openProject }) => {
 
   const handleCarouselClick = useCallback((e) => {
     if (isAnimating) return;
-    
+
     const carousel = carouselRef.current;
     if (!carousel) return;
 
@@ -54,17 +54,45 @@ const ProjectCarousel = ({ projects, openProject }) => {
   }, [currentIndex, totalProjects]);
 
   return (
-    <div 
+    <div
       ref={carouselRef}
-      className="relative h-[420px] flex items-center justify-center cursor-pointer"
+      className="relative h-[420px] flex items-center justify-center cursor-pointer touch-pan-y"
       onClick={handleCarouselClick}
+      onTouchStart={(e) => {
+        const touch = e.touches[0];
+        carouselRef.current.touchStartX = touch.clientX;
+        carouselRef.current.touchStartY = touch.clientY;
+      }}
+      onTouchMove={(e) => {
+        // Optional: Block vertical scroll if horizontal swipe is detected
+        const touch = e.touches[0];
+        const diffX = carouselRef.current.touchStartX - touch.clientX;
+        const diffY = carouselRef.current.touchStartY - touch.clientY;
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          // e.preventDefault(); // careful with this in React passive events
+        }
+      }}
+      onTouchEnd={(e) => {
+        const touch = e.changedTouches[0];
+        const diffX = carouselRef.current.touchStartX - touch.clientX;
+        const diffY = carouselRef.current.touchStartY - touch.clientY;
+
+        // Horizontal swipe threshold (50px)
+        if (Math.abs(diffX) > 50 && Math.abs(diffX) > Math.abs(diffY)) {
+          if (diffX > 0) {
+            nextProject(); // Swipe Left -> Next
+          } else {
+            prevProject(); // Swipe Right -> Prev
+          }
+        }
+      }}
     >
       {/* Top instruction with proper spacing */}
       <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10 text-sm text-gray-300 bg-black/70 backdrop-blur-xl px-4 py-2 rounded-full border border-gray-600/50 mb-4">
         ← Click sides to navigate • Click center to view details →
       </div>
 
-      <button 
+      <button
         onClick={(e) => {
           e.stopPropagation();
           prevProject();
@@ -75,8 +103,8 @@ const ProjectCarousel = ({ projects, openProject }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
-      
-      <button 
+
+      <button
         onClick={(e) => {
           e.stopPropagation();
           nextProject();
@@ -101,15 +129,12 @@ const ProjectCarousel = ({ projects, openProject }) => {
         return (
           <div
             key={index}
-            className={`absolute transition-all duration-500 ease-out ${
-              position === 'center' 
-                ? 'z-20 scale-100 opacity-100 cursor-pointer' 
+            className={`absolute transition-all duration-500 ease-out ${position === 'center'
+                ? 'z-20 scale-100 opacity-100 cursor-pointer'
                 : 'z-10 scale-90 opacity-50 blur-[2px]'
-            } ${
-              position === 'side' && index < currentIndex ? '-translate-x-48' : ''
-            } ${
-              position === 'side' && index > currentIndex ? 'translate-x-48' : ''
-            }`}
+              } ${position === 'side' && index < currentIndex ? '-translate-x-48' : ''
+              } ${position === 'side' && index > currentIndex ? 'translate-x-48' : ''
+              }`}
             onClick={(e) => {
               if (position === 'center') {
                 e.stopPropagation();
@@ -117,28 +142,27 @@ const ProjectCarousel = ({ projects, openProject }) => {
               }
             }}
           >
-            <div className={`bg-gray-800/80 backdrop-blur-lg rounded-2xl p-6 w-80 min-h-[300px] max-h-[300px] border border-gray-600/50 shadow-2xl transition-all duration-300 flex flex-col ${
-              position === 'center' 
-                ? 'hover:shadow-2xl hover:border-blue-500/50 hover:scale-105' 
+            <div className={`bg-gray-800/80 backdrop-blur-lg rounded-2xl p-6 w-80 min-h-[300px] max-h-[300px] border border-gray-600/50 shadow-2xl transition-all duration-300 flex flex-col ${position === 'center'
+                ? 'hover:shadow-2xl hover:border-blue-500/50 hover:scale-105'
                 : 'hover:opacity-70'
-            }`}>
+              }`}>
               {/* Fixed height title */}
               <h3 className="text-2xl font-bold mb-3 text-white line-clamp-2 min-h-[64px] flex items-start">
                 {project.title}
               </h3>
-              
+
               {/* Fixed height description */}
               <div className="flex-grow mb-4 min-h-[96px]">
                 <p className="text-gray-300 line-clamp-3 leading-relaxed">
                   {project.description}
                 </p>
               </div>
-              
+
               {/* Tech tags with consistent spacing */}
               <div className="flex flex-wrap gap-2 mb-4 min-h-[32px] items-center">
                 {project.tech.slice(0, 3).map((tech, i) => (
-                  <span 
-                    key={i} 
+                  <span
+                    key={i}
                     className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium border border-blue-500/30"
                   >
                     {tech}
@@ -150,7 +174,7 @@ const ProjectCarousel = ({ projects, openProject }) => {
                   </span>
                 )}
               </div>
-              
+
               {/* CTA button - only on center card */}
               {position === 'center' && (
                 <div className="px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold text-center text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
@@ -171,11 +195,10 @@ const ProjectCarousel = ({ projects, openProject }) => {
               e.stopPropagation();
               goToProject(index);
             }}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 scale-125 shadow-lg' 
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex
+                ? 'bg-gradient-to-r from-blue-500 to-purple-600 scale-125 shadow-lg'
                 : 'bg-gray-600 hover:bg-gray-500 hover:scale-110'
-            }`}
+              }`}
           />
         ))}
       </div>

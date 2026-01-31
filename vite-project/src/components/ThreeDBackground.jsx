@@ -35,6 +35,9 @@ const ThreeDBackground = () => {
       });
       renderer.setSize(window.innerWidth, window.innerHeight);
       renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      
+      // Mobile optimization: allow touch to pass through
+      renderer.domElement.style.touchAction = 'none'; // changed from pan-y to none to let Three.js handle it if needed, but CSS handles document scroll
       mount.appendChild(renderer.domElement);
 
       // === LIGHTS ===
@@ -44,7 +47,9 @@ const ThreeDBackground = () => {
       scene.add(ambient, point);
 
       // === OPTIMIZED PARTICLES ===
-      const starCount = 800;
+      // Reduce star count on mobile for performance
+      const isMobile = window.innerWidth <= 768;
+      const starCount = isMobile ? 300 : 800; // Reduced from 800
       const starPositions = new Float32Array(starCount * 3);
 
       for (let i = 0; i < starCount * 3; i++) {
@@ -93,6 +98,9 @@ const ThreeDBackground = () => {
       let targetX = 0, targetY = 0;
       
       const handleMouseMove = (e) => {
+        // Disable mouse parallax on mobile/touch to prevent weird movement
+        if (window.innerWidth <= 768) return;
+        
         mouse.x = (e.clientX / window.innerWidth - 0.5) * 0.5;
         mouse.y = -(e.clientY / window.innerHeight - 0.5) * 0.5;
       };
@@ -142,7 +150,9 @@ const ThreeDBackground = () => {
         resizeObserver.disconnect();
         window.removeEventListener("mousemove", handleMouseMove);
         if (frameRef.current) cancelAnimationFrame(frameRef.current);
-        mount.removeChild(renderer.domElement);
+        if (mount.contains(renderer.domElement)) {
+            mount.removeChild(renderer.domElement);
+         }
         renderer.dispose();
       };
     });
