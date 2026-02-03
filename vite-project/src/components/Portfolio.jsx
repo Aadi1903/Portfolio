@@ -149,7 +149,7 @@ const Portfolio = () => {
                 Get In Touch
               </button>
               <a
-                href="/Portfolio2-cv.pdf" download
+                href="/Aadi Jain-CV.pdf" download
                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 flex items-center gap-2 hover:shadow-lg text-white hoverable"
               >
                 <Download size={20} /> Download CV
