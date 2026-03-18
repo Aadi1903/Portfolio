@@ -1,4 +1,4 @@
-import { Cloud, Boxes, Cpu, Zap, Code, Briefcase, FileCode, Wrench, Database, Star, Terminal, GraduationCap, Book, Notebook, Container } from 'lucide-react';
+import { Cloud, Boxes, Cpu, Zap, Code, Briefcase, FileCode, Wrench, Database, Star, Terminal, GraduationCap, Book, Notebook, Container, BookOpen } from 'lucide-react';
 
 export const skills = [
   {
@@ -38,6 +38,28 @@ export const skills = [
 
 export const projects = [
   {
+    title: 'End-to-End CI/CD Pipeline with Jenkins & Kubernetes',
+    description: "Automated full-stack CI/CD pipeline with security scanning, containerization, and K8's deployment",
+    detailedDescription: "Designed and implemented a complete CI/CD pipeline using Jenkins, Docker, and Kubernetes. Built a scalable infrastructure with dedicated virtual machines for Jenkins, SonarQube, and Nexus. Automated code integration, testing, security scanning, artifact management, and deployment workflows. Integrated tools like Trivy for vulnerability scanning and SonarQube for code quality analysis. Deployed containerized applications to a Kubernetes cluster with RBAC and secure authentication mechanisms.",
+    tech: [
+      "Jenkins", "Docker", "Kubernetes", "SonarQube", "Nexus", "Trivy", "Linux", "Git"
+    ],
+    github: 'https://github.com/Aadi1903/GameReview',
+    demo: '#',
+    features: [
+      "Automated CI/CD pipeline (build, test, deploy)",
+      "Kubernetes cluster setup and deployment",
+      "Docker-based containerization",
+      "Code quality analysis using SonarQube",
+      "Vulnerability scanning using Trivy",
+      "Artifact management with Nexus",
+      "Role-Based Access Control (RBAC) implementation",
+      "Secure authentication between Jenkins and Kubernetes",
+      "Email notifications for pipeline status",
+      "Infrastructure setup using virtual machines"
+    ],
+  },
+  {
     title: "CloudCostLens – AWS Services Recommendation Tool",
     description: "Rule-based AWS services recommendation and cost-planning platform",
     detailedDescription: "Developed a full-stack web application that simplifies AWS architecture selection using a deterministic, rule-based approach. The system analyzes user requirements such as scalability, availability, workload type, and budget to recommend optimized cloud architectures. Includes a clear architecture flow representation to explain service dependencies and cost–performance trade-offs. The application is containerized using Docker, with infrastructure planning defined through Terraform for consistent and reproducible deployments.",
@@ -61,22 +83,6 @@ export const projects = [
       "Clean and scalable full-stack design"
     ]
   },
-
-  {
-    title: 'Dice Game – Java Swing',
-    description: 'Interactive multiplayer dice game with animations and custom rules',
-    detailedDescription: 'Built a desktop Dice Game using Java and Swing with support for multiple players, customizable rounds and target scores, animated dice rolls, synchronized sound effects, and a live scoreboard with leaderboard. The project applies object-oriented design, event-driven programming, and clean modular architecture to deliver a smooth and engaging gameplay experience.',
-    tech: ['Java', 'Java Swing', 'OOP', 'DSA (Java)', 'Git/GitHub'],
-    github: 'https://github.com/Aadi1903/Dice-Game',
-    demo: '#',
-    features: [
-      'Multiplayer gameplay with custom settings',
-      'Animated dice roll and sound effects',
-      'Real-time score tracking and leaderboard',
-      'Multiple winning conditions (highest score, lucky six, exact target)',
-      'Modular, maintainable Java Swing architecture'
-    ]
-  },
   {
     title: "SpeakPeak AI Mock Interview",
     description: "AI-powered mock interview platform with real-time voice interaction and personalized feedback",
@@ -96,8 +102,40 @@ export const projects = [
 ];
 
 export const journey = [
-  { year: 'Nov 2025', title: 'Pre-Final Year & Infosys Intern', desc: 'Simultaneously pursuing academic growth while interning at Infosys Springboard, focusing on Java, Spring Boot, and Web development.', icon: Cloud },
+  { year: '2026 - Present', title: 'Pre-Final Year', desc: 'Focused on strengthening core and Cloud/DevOps concepts while building real-world projects and preparing for placements.', icon: Cloud },
+  { year: 'Jan 2026', title: 'Infosys Springboard Virtual Intern', desc: 'Completed internship focusing on Java, Spring Boot, and Web Development, gaining hands-on experience in backend development and industry practices.', icon: BookOpen },
   { year: 'Aug 2023', title: 'Started B.Tech in CSE', desc: 'Began my engineering journey with growing interest in cloud technologies.', icon: GraduationCap },
   { year: 'Apr 2023', title: 'Completed Intermediate', desc: 'Started exploring coding, technology basics, and computer fundamentals.', icon: Notebook },
   { year: 'Mar 2020', title: 'Completed High School', desc: 'Developed curiosity for computers and technology.', icon: Book }
+];
+
+export const certifications = [
+  {
+    title: "AWS Certified Solutions Architect – Associate",
+    organization: "Amazon Web Services (AWS)",
+    issueDate: "Aug 2025",
+    description: "Validates expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.",
+    credentialUrl: "#",
+    icon: Cloud,
+    highlight: true
+  },
+  {
+    title: "Microsoft Certified: Azure Fundamentals",
+    organization: "Microsoft",
+    issueDate: "Jan 2025",
+    description: "Foundational knowledge of cloud services and how those services are provided with Microsoft Azure.",
+    credentialUrl: "#",
+    icon: Zap,
+    highlight: false
+  },
+  {
+    title: "Docker Certified Associate (DCA)",
+    organization: "Docker",
+    issueDate: "Nov 2024",
+    description: "Demonstrates proficiency in Docker containerization, orchestration, and security.",
+    credentialUrl: "#",
+    icon: Boxes,
+    highlight: false
+  }
+
 ];

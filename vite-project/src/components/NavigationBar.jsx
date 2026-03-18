@@ -1,12 +1,13 @@
 import React from 'react';
-import { Home, User, Briefcase, Award, Phone } from 'lucide-react';
+import { Home, User, Briefcase, Award, Phone, GraduationCap } from 'lucide-react';
 
 const NavigationBar = ({ activeSection, scrollToSection, darkMode, setDarkMode }) => {
   const sections = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'skills', label: 'Skills', icon: User },
     { id: 'projects', label: 'Projects', icon: Briefcase },
-    { id: 'journey', label: 'Journey', icon: Award },
+    { id: 'certifications', label: 'Certs', icon: Award },
+    { id: 'journey', label: 'Journey', icon: GraduationCap },
     { id: 'about', label: 'About', icon: User },
     { id: 'contact', label: 'Contact', icon: Phone }
   ];

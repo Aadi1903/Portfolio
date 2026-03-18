@@ -13,7 +13,7 @@ import ProjectCarousel from './ProjectCarousel';
 import ProjectModal from './ProjectModal';
 
 // Import data
-import { skills, projects, journey } from '../data/portfolioData';
+import { skills, projects, journey, certifications } from '../data/portfolioData';
 
 const Portfolio = () => {
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'skills', 'projects', 'journey', 'about', 'contact'];
+      const sections = ['home', 'skills', 'projects', 'certifications', 'journey', 'about', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -196,6 +196,67 @@ const Portfolio = () => {
               Featured <span className="text-blue-500">Projects</span>
             </h2>
             <ProjectCarousel projects={projects} openProject={openProject} />
+          </div>
+        </section>
+
+        <section id="certifications" className="py-20 px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4">
+                My <span className="text-blue-500">Certifications</span>
+              </h2>
+              <p className="text-lg text-gray-500 dark:text-gray-400">
+                Proof of Skills & Learning
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {certifications.map((cert, idx) => (
+                <div
+                  key={idx}
+                  className={`relative group ${cardBg} p-8 rounded-2xl shadow-lg border ${cert.highlight
+                      ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                      : darkMode ? 'border-gray-700 hover:border-blue-400' : 'border-gray-200 hover:border-blue-400'
+                    } transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl overflow-hidden animate-slide-in-up`}
+                  style={{ animationDelay: `${idx * 0.15}s` }}
+                >
+                  {/* {cert.highlight && (
+                    <div className="absolute top-0 right-0 text-xs font-bold text-white bg-blue-500 py-1 px-3 rounded-bl-xl">
+                      Featured
+                    </div>
+                  )} */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="p-4 rounded-xl bg-blue-500/10 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                      <cert.icon size={28} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold dark:text-gray-100 leading-tight">{cert.title}</h3>
+                      <p className="text-sm text-blue-500 font-semibold mt-1">{cert.organization}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 leading-relaxed">
+                    {cert.description}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-auto">
+                    <span className="text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-800 py-1 px-3 rounded-full">
+                      {cert.issueDate}
+                    </span>
+                    {cert.credentialUrl && (
+                      <a
+                        href={cert.credentialUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 text-sm font-semibold hover:text-blue-600 dark:hover:text-blue-400 flex items-center transition-colors group/link"
+                      >
+                        View Credential <span className="ml-1 text-lg leading-none cursor-pointer group-hover/link:translate-x-1 transition-transform">→</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
