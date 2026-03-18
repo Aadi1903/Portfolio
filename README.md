@@ -7,8 +7,8 @@ A clean, modern, and fully responsive personal portfolio website built to showca
 🔗 https://aadijain-portfolio.vercel.app/
 
 ## Screenshots
-![Portfolio Screenshot 1](./public/placeholder-1.png)
-![Portfolio Screenshot 2](./public/placeholder-2.png)
+![Portfolio Screenshot 1](./assets/placeholder-1.png)
+![Portfolio Screenshot 2](./assets/placeholder-2.png)
 
 ## Features
 - Responsive design for desktop, tablet, and mobile devices
