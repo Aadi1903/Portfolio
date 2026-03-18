@@ -134,7 +134,7 @@ const Portfolio = () => {
             </h1>
 
             <p className="text-xl md:text-2xl mb-6 text-white font-light bg-black/30 backdrop-blur-sm p-4 rounded-2xl inline-block">
-              Cloud Engineer & Full Stack Developer
+              Cloud & DevOps Enthusiast | Full Stack Developer
             </p>
 
             <p className="text-lg mb-8 text-gray-300 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed bg-black/30 backdrop-blur-sm p-6 rounded-2xl">
@@ -215,8 +215,8 @@ const Portfolio = () => {
                 <div
                   key={idx}
                   className={`relative group ${cardBg} p-8 rounded-2xl shadow-lg border ${cert.highlight
-                      ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                      : darkMode ? 'border-gray-700 hover:border-blue-400' : 'border-gray-200 hover:border-blue-400'
+                    ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                    : darkMode ? 'border-gray-700 hover:border-blue-400' : 'border-gray-200 hover:border-blue-400'
                     } transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl overflow-hidden animate-slide-in-up`}
                   style={{ animationDelay: `${idx * 0.15}s` }}
                 >
@@ -318,7 +318,8 @@ const Portfolio = () => {
 
                   <h3 className="text-2xl font-bold text-center mb-4 dark:text-gray-100">Aadi Jain</h3>
                   <p className="text-gray-400 dark:text-gray-300 text-center mb-6">
-                    Cloud Engineer & Software Developer
+                    Cloud & DevOps Engineer |<br />
+                    Full Stack Developer
                   </p>
                 </div>
                 <div>
