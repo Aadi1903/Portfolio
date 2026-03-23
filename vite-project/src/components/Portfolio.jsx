@@ -13,6 +13,7 @@ import TiltCard from './TiltCard';
 import TechMarquee from './TechMarquee';
 import ProjectList from './ProjectList';
 import TopNav from './TopNav';
+import ScanlineOverlay from './ScanlineOverlay';
 
 import { skills, projects, journey, certifications } from '../data/portfolioData';
 
@@ -29,12 +30,12 @@ const SectionHeading = ({ label, heading, accent }) => (
 );
 
 const Portfolio = () => {
-  const [loading, setLoading]       = useState(true);
-  const [activeSection, setActive]  = useState('home');
-  const [modalProject, setModal]    = useState(null);
-  const lineRef    = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [activeSection, setActive] = useState('home');
+  const [modalProject, setModal] = useState(null);
+  const lineRef = useRef(null);
   const journeyRef = useRef(null);
-  const heroRef    = useRef(null);
+  const heroRef = useRef(null);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 2500);
@@ -43,7 +44,7 @@ const Portfolio = () => {
 
   /* section tracker + parallax hero */
   useEffect(() => {
-    const SECTIONS = ['home','about','skills','projects','certifications','journey','contact'];
+    const SECTIONS = ['home', 'about', 'skills', 'projects', 'certifications', 'journey', 'contact'];
     let ticking = false;
 
     const onScroll = () => {
@@ -61,7 +62,7 @@ const Portfolio = () => {
         if (heroRef.current && window.innerWidth >= 768) {
           const y = window.pageYOffset;
           heroRef.current.style.transform = `translateY(${y * 0.25}px)`;
-          heroRef.current.style.opacity   = `${Math.max(0, 1 - y / 650)}`;
+          heroRef.current.style.opacity = `${Math.max(0, 1 - y / 650)}`;
         }
         ticking = false;
       });
@@ -97,7 +98,7 @@ const Portfolio = () => {
     setActive(id);
   }, []);
 
-  const openProject  = useCallback(i => setModal(projects[i]), []);
+  const openProject = useCallback(i => setModal(projects[i]), []);
   const closeProject = useCallback(() => setModal(null), []);
 
   return (
@@ -105,6 +106,7 @@ const Portfolio = () => {
       <Preloader loading={loading} />
       <ScrollProgress />
       <CustomCursor />
+      <ScanlineOverlay />
 
       <div className="min-h-screen bg-wqf-dark text-wqf-light relative overflow-x-hidden cursor-none font-sans">
         {/* subtle vignette — pointer-events:none is enforced in CSS */}
@@ -115,18 +117,27 @@ const Portfolio = () => {
         {/* ════════════════ HERO ════════════════════════════════════ */}
         <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
           {/* corner metadata — desktop only */}
-          <div className="absolute top-20 left-6 text-[10px] font-mono text-wqf-light/20 uppercase tracking-widest hidden xl:block select-none">
-            <div>28.6139° N / 77.2090° E</div>
-            <div className="mt-1 text-wqf-teal/40">New Delhi, IN</div>
+          <div className="absolute top-20 left-6 text-[10px] font-mono text-wqf-light/50 uppercase tracking-widest hidden xl:block select-none">
+            <div>30.7333° N / 76.7794° E</div>
+            <div className="mt-1 text-wqf-teal/70">Punjab, IN</div>
           </div>
-          <div className="absolute top-20 right-6 text-[10px] font-mono text-wqf-light/20 uppercase tracking-widest text-right hidden xl:block select-none">
+          <div className="absolute top-20 right-6 text-[10px] font-mono text-wqf-light/50 uppercase tracking-widest text-right hidden xl:block select-none">
             <div>Portfolio v3.0 · 2026</div>
-            <div className="mt-1 text-wqf-teal/40">Open to Work ✦</div>
+            <div className="mt-1 text-wqf-teal/70">Open to Work ✦</div>
           </div>
 
           <div ref={heroRef} className="relative z-10 text-center px-4 sm:px-6 max-w-6xl w-full">
             <ScrollReveal animation="fade-down" delay={0}>
-              <div className="flex justify-center mb-6 sm:mb-8">
+              <div className="flex flex-col items-center mb-8 gap-4 px-2">
+                <div className="flex flex-wrap justify-center items-center gap-2 px-3 sm:px-4 py-2 bg-wqf-gray border border-wqf-teal/30 text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-wqf-teal glass-terminal">
+                  <span className="w-1.5 h-1.5 bg-wqf-teal rounded-full animate-pulse" />
+                  System Status: Online
+                  <span className="hidden sm:inline opacity-20">|</span>
+                  <div className="sm:hidden w-full h-0" /> {/* mobile break */}
+                  Node: k8s-master
+                  <span className="opacity-20">|</span>
+                  Region: IN-NORTH
+                </div>
                 <div className="flex items-center gap-2 px-4 py-2 bg-wqf-gray border border-wqf-teal/30 text-xs font-black uppercase tracking-widest text-wqf-teal">
                   <span className="w-1.5 h-1.5 bg-wqf-teal rounded-full animate-pulse" />
                   Available for opportunities · 2026
@@ -135,27 +146,37 @@ const Portfolio = () => {
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={100}>
-              <h1 className="hero-name text-white mb-1 select-none">AADI</h1>
-              <h1 className="hero-name mb-6 sm:mb-8">
+              <h1 className="hero-name text-transparent bg-clip-text bg-gradient-to-r from-white via-wqf-teal to-wqf-light mb-1 select-none drop-shadow-2xl leading-[0.8]">AADI</h1>
+              <h1 className="hero-name mb-6 sm:mb-8 drop-shadow-[0_0_15px_rgba(92,147,159,0.5)] leading-[0.8]">
                 <GlitchText text="JAIN" className="text-wqf-teal" />
               </h1>
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={250}>
-              <div className="text-base sm:text-lg md:text-xl text-wqf-light/70 mb-8 font-mono tracking-wide">
-                <span className="text-wqf-gray">$ exec</span>{' '}
+              <div className="text-base sm:text-lg md:text-xl text-wqf-light mb-8 font-mono tracking-wide glass-terminal p-4 rounded-lg inline-block">
+                <span className="text-wqf-teal font-bold">aadi@k8s:</span><span className="text-wqf-orange font-bold">~</span><span className="text-wqf-light/70">$</span><span className="text-wqf-light"> deploy --role=</span>
                 <TypewriterText
-                  phrases={['Cloud & DevOps Engineer','Full Stack Developer','AWS Solutions Architect','Kubernetes Enthusiast','Open Source Builder']}
-                  className="text-wqf-teal"
+                  phrases={['"Cloud & DevOps Engineer"', '"Full Stack Developer"', '"AWS Cloud Engineer"', '"K8s Engineer"', '"SRE"']}
+                  className="text-wqf-teal font-bold"
                 />
               </div>
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={370}>
-              <p className="text-sm sm:text-base text-wqf-light/40 max-w-xl mx-auto mb-12 leading-relaxed px-4">
-                Building reliable cloud architectures and intuitive full-stack systems —
-                turning complex infrastructure into elegant, scalable solutions.
-              </p>
+              <div className="max-w-xl mx-auto mb-12 px-4 text-left">
+                <div className="glass-terminal p-4 rounded-md shadow-lg font-mono text-xs sm:text-sm">
+                  <div className="flex gap-1.5 mb-2 border-b border-wqf-teal/10 pb-2">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                  </div>
+                  <div className="text-wqf-light/90 leading-relaxed">
+                    <span className="text-wqf-teal">❯</span> Building reliable cloud architectures and intuitive full-stack systems —<br />
+                    <span className="text-wqf-teal">❯</span> turning complex infrastructure into elegant, scalable solutions.
+                    <span className="inline-block w-2 h-4 bg-wqf-teal ml-1 animate-pulse align-middle"></span>
+                  </div>
+                </div>
+              </div>
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={460}>
@@ -200,10 +221,10 @@ const Portfolio = () => {
                   <p className="text-wqf-teal font-bold tracking-widest uppercase text-xs mb-6">Cloud & DevOps · Full Stack Dev</p>
                   <div className="flex gap-3 flex-wrap justify-center">
                     {[
-                      { href:'https://github.com/Aadi1903', icon: Github },
-                      { href:'https://linkedin.com/in/aadi-jain01/', icon: Linkedin },
-                      { href:'mailto:aadiijain03@gmail.com', icon: Mail },
-                      { href:'https://leetcode.com/u/Aadi0324/', icon: Code },
+                      { href: 'https://github.com/Aadi1903', icon: Github },
+                      { href: 'https://linkedin.com/in/aadi-jain01/', icon: Linkedin },
+                      { href: 'mailto:aadiijain03@gmail.com', icon: Mail },
+                      { href: 'https://leetcode.com/u/Aadi0324/', icon: Code },
                     ].map(({ href, icon: Icon }, i) => (
                       <a key={i} href={href} target="_blank" rel="noopener noreferrer"
                         className="p-3 bg-wqf-gray border border-wqf-gray hover:border-wqf-teal hover:text-wqf-teal text-wqf-light/50 transition-all">
@@ -218,13 +239,25 @@ const Portfolio = () => {
               <ScrollReveal animation="fade-left" className="md:col-span-8">
                 <div className="p-8 md:p-10 h-full flex flex-col gap-8 relative group">
                   <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-700" />
-                  <p className="text-wqf-light/75 leading-relaxed text-base md:text-lg border-l-4 border-wqf-orange pl-6">
-                    I'm a 3rd-year Computer Science student who loves turning ideas into scalable cloud-powered systems.
-                    From AWS and Kubernetes to Java backend development, I craft solutions that are efficient, reliable,
-                    and meaningful. <span className="text-wqf-light font-semibold">Always learning. Always building.</span>
-                  </p>
+                  <div className="bg-[#111] border border-wqf-gray p-5 font-mono text-sm sm:text-base relative shadow-lg">
+                    <div className="flex items-center justify-between mb-4 border-b border-wqf-gray pb-2">
+                      <span className="text-[10px] text-wqf-light/40 uppercase tracking-widest">cat ~/about_me.txt</span>
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                      </div>
+                    </div>
+                    <div className="text-wqf-light/90 leading-relaxed">
+                      I'm a 3rd-year Computer Science student who loves turning ideas into scalable cloud-powered systems.
+                      <br /><br />
+                      From AWS and Kubernetes to Java backend development, I craft solutions that are efficient, reliable,
+                      and meaningful. <span className="text-wqf-teal font-semibold">Always learning. Always building.</span>
+                      <span className="inline-block w-2.5 h-4 bg-wqf-teal ml-1 animate-pulse align-middle"></span>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-3 border border-wqf-gray">
-                    {[{ v:'10+', l:'Projects' }, { v:'3+', l:'Certifications' }, { v:'15+', l:'Technologies' }].map(({ v, l }) => (
+                    {[{ v: '10+', l: 'Projects' }, { v: '3+', l: 'Certifications' }, { v: '15+', l: 'Technologies' }].map(({ v, l }) => (
                       <div key={l} className="p-4 md:p-6 border-r border-wqf-gray last:border-r-0 text-center hover:bg-wqf-gray transition-colors">
                         <div className="text-2xl md:text-3xl font-black text-wqf-teal mb-1">{v}</div>
                         <div className="text-[10px] md:text-xs text-wqf-light/40 uppercase tracking-widest font-bold">{l}</div>
@@ -259,7 +292,7 @@ const Portfolio = () => {
                             <skill.icon size={15} className="text-wqf-teal/60 flex-shrink-0 group-hover/s:text-wqf-orange transition-colors" />
                             <span className="text-sm font-bold text-wqf-light/70 uppercase tracking-wide flex-1 group-hover/s:text-white transition-colors">{skill.name}</span>
                             <div className="w-16 h-px bg-wqf-gray overflow-hidden flex-shrink-0">
-                              <div className="h-full bg-wqf-teal/30 group-hover/s:bg-wqf-teal transition-colors duration-500" style={{ width:`${65 + si * 7}%` }} />
+                              <div className="h-full bg-wqf-teal/30 group-hover/s:bg-wqf-teal transition-colors duration-500" style={{ width: `${65 + si * 7}%` }} />
                             </div>
                           </div>
                         ))}
@@ -286,7 +319,7 @@ const Portfolio = () => {
               </ScrollReveal>
               <ScrollReveal animation="fade-left">
                 <div className="text-right">
-                  <div className="text-4xl md:text-5xl font-black text-wqf-gray/30 font-mono">{String(projects.length).padStart(2,'0')}</div>
+                  <div className="text-4xl md:text-5xl font-black text-wqf-gray/30 font-mono">{String(projects.length).padStart(2, '0')}</div>
                   <div className="text-xs font-black uppercase tracking-widest text-wqf-light/30">Projects</div>
                 </div>
               </ScrollReveal>
@@ -320,12 +353,6 @@ const Portfolio = () => {
                       <p className="text-wqf-light/60 text-sm leading-relaxed flex-grow mb-6">{cert.description}</p>
                       <div className="flex items-center justify-between flex-wrap gap-3 mt-auto">
                         <span className="text-xs font-black text-wqf-dark bg-wqf-light py-1 px-3 uppercase tracking-widest">{cert.issueDate}</span>
-                        {cert.credentialUrl && (
-                          <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-wqf-teal text-xs font-black uppercase tracking-widest hover:text-wqf-orange transition-colors">
-                            Verify <ArrowUpRight size={12} />
-                          </a>
-                        )}
                       </div>
                     </div>
                   </TiltCard>
@@ -343,7 +370,7 @@ const Portfolio = () => {
               {/* Timeline line — hidden on mobile */}
               <div ref={lineRef}
                 className="absolute left-1/2 -translate-x-1/2 h-full w-px bg-wqf-teal hidden md:block"
-                style={{ transformOrigin:'top', transform:'scaleY(0)' }}
+                style={{ transformOrigin: 'top', transform: 'scaleY(0)' }}
               />
 
               {journey.map((item, idx) => (
@@ -360,7 +387,9 @@ const Portfolio = () => {
                           <div className="text-wqf-teal font-black text-xs tracking-widest uppercase">[ {item.year} ]</div>
                         </div>
                         <h3 className="text-base font-black mb-2 text-white uppercase tracking-wide">{item.title}</h3>
-                        <p className="text-wqf-light/60 leading-relaxed border-l-2 border-wqf-gray pl-3 text-sm">{item.desc}</p>
+                        <div className="bg-[#111] p-3 rounded font-mono text-xs border border-wqf-gray/50 text-wqf-light/90 shadow-inner">
+                          <span className="text-wqf-teal mr-2">❯</span>{item.desc}
+                        </div>
                       </div>
                     </TiltCard>
                   </div>
@@ -376,7 +405,9 @@ const Portfolio = () => {
                         <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-500" />
                         <div className="text-wqf-teal font-black text-xs tracking-widest uppercase mb-2">[ {item.year} ]</div>
                         <h3 className="text-lg font-black mb-3 text-white uppercase tracking-wide">{item.title}</h3>
-                        <p className="text-wqf-light/60 leading-relaxed border-l-2 border-wqf-gray pl-4 text-sm">{item.desc}</p>
+                        <div className="bg-[#111] p-4 rounded font-mono text-sm border border-wqf-gray/50 text-wqf-light/90 shadow-inner mt-2">
+                          <span className="text-wqf-teal mr-2">❯</span>{item.desc}
+                        </div>
                       </div>
                     </TiltCard>
                   </div>
@@ -395,20 +426,28 @@ const Portfolio = () => {
               <ScrollReveal animation="fade-right" className="md:col-span-2">
                 <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wqf-gray h-full relative group">
                   <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-teal group-hover:w-full transition-all duration-700" />
-                  <p className="text-wqf-light/50 text-sm leading-relaxed mb-8 border-l-4 border-wqf-gray pl-4">
-                    Open to internships, full-time roles, and exciting side projects.
-                    Always happy to have a conversation.
-                  </p>
+
+                  <div className="bg-[#111] border border-wqf-gray p-4 font-mono text-xs mb-8">
+                    <div className="flex gap-1.5 mb-2 border-b border-wqf-gray pb-2">
+                      <div className="w-2 h-2 rounded-full bg-wqf-teal/40"></div>
+                      <div className="w-2 h-2 rounded-full bg-wqf-orange/40"></div>
+                    </div>
+                    <p className="text-wqf-light/90 leading-relaxed">
+                      <span className="text-wqf-teal font-bold">$ echo</span> "Open to internships, full-time roles, and exciting side projects.<br />
+                      Always happy to have a conversation."
+                      <span className="inline-block w-1.5 h-3 bg-wqf-gray ml-1 animate-pulse align-middle"></span>
+                    </p>
+                  </div>
                   <div className="space-y-4">
                     {[
-                      { label:'Email',    value:'aadiijain03@gmail.com',   href:'mailto:aadiijain03@gmail.com' },
-                      { label:'LinkedIn', value:'/in/aadi-jain01',          href:'https://linkedin.com/in/aadi-jain01/' },
-                      { label:'GitHub',   value:'/Aadi1903',                href:'https://github.com/Aadi1903' },
+                      { label: 'Email', value: 'aadiijain03@gmail.com', href: 'mailto:aadiijain03@gmail.com' },
+                      { label: 'LinkedIn', value: '/in/aadi-jain01', href: 'https://linkedin.com/in/aadi-jain01/' },
+                      { label: 'GitHub', value: '/Aadi1903', href: 'https://github.com/Aadi1903' },
                     ].map(({ label, value, href }) => (
                       <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                         className="flex items-start gap-3 group/l hover:text-wqf-teal transition-colors">
                         <span className="text-xs font-black uppercase tracking-widest text-wqf-gray w-20 flex-shrink-0 pt-0.5">{label}</span>
-                        <span className="text-xs text-wqf-light/50 group-hover/l:text-wqf-teal transition-colors font-mono flex items-center gap-1 break-all">
+                        <span className="text-xs text-wqf-light/80 group-hover/l:text-wqf-teal transition-colors font-mono flex items-center gap-1 break-all">
                           {value} <ArrowUpRight size={10} className="flex-shrink-0" />
                         </span>
                       </a>
@@ -423,19 +462,19 @@ const Portfolio = () => {
                   <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-700" />
                   <input type="hidden" name="access_key" value="950c6c6e-ae89-419a-adaf-9a0629049476" />
                   <div className="grid sm:grid-cols-2 gap-8">
-                    {[{f:'name',t:'text'},{f:'email',t:'email'}].map(({f,t}) => (
+                    {[{ f: 'name', t: 'text' }, { f: 'email', t: 'email' }].map(({ f, t }) => (
                       <div key={f}>
-                        <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/30">{f}</label>
+                        <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/40">{f}</label>
                         <input type={t} name={f} required
-                          className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white placeholder-wqf-gray/40 font-mono text-sm caret-wqf-orange"
+                          className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white placeholder-wqf-light/40 font-mono text-sm caret-wqf-orange"
                           placeholder={`Your ${f}`} />
                       </div>
                     ))}
                   </div>
                   <div>
-                    <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/30">Message</label>
+                    <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/50">Message</label>
                     <textarea rows="4" name="message" required
-                      className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white resize-none placeholder-wqf-gray/40 font-mono text-sm caret-wqf-orange"
+                      className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white resize-none placeholder-wqf-light/40 font-mono text-sm caret-wqf-orange"
                       placeholder="Your message..." />
                   </div>
                   <button type="submit"
@@ -454,10 +493,10 @@ const Portfolio = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-3">
               <div className="w-7 h-7 border border-wqf-teal flex items-center justify-center font-black text-wqf-teal text-xs">AJ</div>
-              <span className="text-wqf-light/30 text-xs font-black uppercase tracking-widest">Aadi Jain © 2026</span>
+              <span className="text-wqf-light/60 text-xs font-black uppercase tracking-widest">Aadi Jain © 2026</span>
             </div>
-            <p className="text-wqf-light/15 text-xs uppercase tracking-widest">React & Tailwind CSS</p>
-            <GlitchText text="@AADI1903" className="text-wqf-gray/40 text-xs font-black tracking-widest uppercase" />
+            <p className="text-wqf-light/40 text-xs uppercase tracking-widest">Engineered for Performance & Scale</p>
+            <GlitchText text="@AADI1903" className="text-wqf-gray/60 text-xs font-black tracking-widest uppercase" />
           </div>
         </footer>
       </div>

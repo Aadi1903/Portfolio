@@ -29,8 +29,8 @@ const ProjectModal = ({ project, onClose }) => {
         <div className="absolute top-0 right-0 w-4 h-4 bg-[#5C939F] pointer-events-none" />
 
         {/* Header */}
-        <div className="flex items-start justify-between p-8 border-b border-[#1E1E1E]">
-          <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wide text-white pr-8 leading-tight">
+        <div className="flex items-start justify-between p-6 md:p-8 border-b border-[#1E1E1E]">
+          <h3 className="text-xl md:text-3xl font-black uppercase tracking-wide text-white pr-8 leading-tight">
             {project.title}
           </h3>
           {/* Close button — explicit z, padding for easy tap */}
@@ -44,7 +44,7 @@ const ProjectModal = ({ project, onClose }) => {
         </div>
 
         {/* Body */}
-        <div className="p-8 space-y-8">
+        <div className="p-6 md:p-8 space-y-8">
           <p className="text-[#DADADA]/80 leading-relaxed border-l-4 border-[#5C939F] pl-6">
             {project.detailedDescription}
           </p>

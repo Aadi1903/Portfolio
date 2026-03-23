@@ -76,6 +76,11 @@
   .section-pad { padding-top: 6rem; padding-bottom: 6rem; }
   @media (min-width: 768px) { .section-pad { padding-top: 8rem; padding-bottom: 8rem; } }
 
+  /* Glass Terminal Look */
+  .glass-terminal {
+    @apply backdrop-blur-lg bg-wqf-dark/70 border border-wqf-teal/20 shadow-2xl;
+  }
+
   /* Scrollbar styling */
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: var(--color-wqf-dark); }
@@ -95,4 +100,13 @@
   60%  { transform: translate(2px, 1px); }
   80%  { transform: translate(1px, -1px); }
   100% { transform: translate(0); }
+}
+
+@keyframes scan {
+  from { transform: translateY(-100vh); }
+  to   { transform: translateY(100vh); }
+}
+
+.animate-scan {
+  animation: scan 8s linear infinite;
 }

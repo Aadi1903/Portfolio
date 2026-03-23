@@ -7,8 +7,15 @@ const CustomCursor = () => {
   const smallBallRef = useRef(null);
   const rafRef = useRef();
   const lastTimeRef = useRef(0);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
+    // Detect touch support
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouch(isTouchDevice);
+    
+    if (isTouchDevice) return;
+
     // Throttled mouse move handler
     let ticking = false;
     
@@ -110,6 +117,8 @@ const CustomCursor = () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [position, isHovering]);
+
+  if (isTouch) return null;
 
   return (
     <>

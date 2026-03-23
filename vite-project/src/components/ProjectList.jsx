@@ -20,7 +20,7 @@ const ProjectList = ({ projects, openProject }) => (
 
           <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6 p-8 md:p-10">
             {/* Index */}
-            <div className="text-6xl font-black text-wqf-gray group-hover:text-wqf-teal/30 transition-colors duration-300 w-16 flex-shrink-0 font-mono leading-none select-none">
+            <div className="text-4xl md:text-6xl font-black text-wqf-gray group-hover:text-wqf-teal/30 transition-colors duration-300 w-12 md:w-16 flex-shrink-0 font-mono leading-none select-none">
               {String(idx + 1).padStart(2, '0')}
             </div>
 
