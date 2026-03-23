@@ -88,7 +88,7 @@ const ProjectCarousel = ({ projects, openProject }) => {
       }}
     >
       {/* Top instruction with proper spacing */}
-      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10 text-sm text-gray-300 bg-black/70 backdrop-blur-xl px-4 py-2 rounded-full border border-gray-600/50 mb-4">
+      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 z-10 text-[10px] font-bold tracking-widest uppercase text-wqf-light/60 bg-wqf-dark px-4 py-2 border border-wqf-gray mb-4">
         ← Click sides to navigate • Click center to view details →
       </div>
 
@@ -97,10 +97,10 @@ const ProjectCarousel = ({ projects, openProject }) => {
           e.stopPropagation();
           prevProject();
         }}
-        className="absolute left-4 z-10 p-3 rounded-full bg-gray-800/80 backdrop-blur-lg hover:bg-gray-700/90 transition-all duration-300 hover:scale-110 shadow-lg"
+        className="absolute left-4 z-10 p-4 bg-wqf-dark border border-wqf-gray text-wqf-light/80 hover:text-wqf-orange hover:bg-wqf-gray transition-all duration-300 wqf-bracket hover:scale-105"
       >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
@@ -109,17 +109,17 @@ const ProjectCarousel = ({ projects, openProject }) => {
           e.stopPropagation();
           nextProject();
         }}
-        className="absolute right-4 z-10 p-3 rounded-full bg-gray-800/80 backdrop-blur-lg hover:bg-gray-700/90 transition-all duration-300 hover:scale-110 shadow-lg"
+        className="absolute right-4 z-10 p-4 bg-wqf-dark border border-wqf-gray text-wqf-light/80 hover:text-wqf-teal hover:bg-wqf-gray transition-all duration-300 wqf-bracket hover:scale-105"
       >
-        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="square" strokeLinejoin="miter" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
 
-      {/* Background blur for side areas */}
+      {/* Background blur for side areas replaced by solid overlays if needed, but none is cleaner */}
       <div className="absolute inset-0 -z-10 flex items-center justify-center">
-        <div className="absolute left-0 w-1/3 h-full bg-gradient-to-r from-gray-900/50 to-transparent backdrop-blur-sm"></div>
-        <div className="absolute right-0 w-1/3 h-full bg-gradient-to-l from-gray-900/50 to-transparent backdrop-blur-sm"></div>
+        <div className="absolute left-0 w-1/4 h-full bg-gradient-to-r from-wqf-dark to-transparent"></div>
+        <div className="absolute right-0 w-1/4 h-full bg-gradient-to-l from-wqf-dark to-transparent"></div>
       </div>
 
       {projects.map((project, index) => {
@@ -142,43 +142,45 @@ const ProjectCarousel = ({ projects, openProject }) => {
               }
             }}
           >
-            <div className={`bg-gray-800/80 backdrop-blur-lg rounded-2xl p-6 w-80 min-h-[300px] max-h-[300px] border border-gray-600/50 shadow-2xl transition-all duration-300 flex flex-col ${position === 'center'
-                ? 'hover:shadow-2xl hover:border-blue-500/50 hover:scale-105'
-                : 'hover:opacity-70'
+            <div className={`bg-wqf-dark p-8 w-80 min-h-[340px] max-h-[340px] border border-wqf-gray transition-all flex flex-col relative group/card ${
+                position === 'center'
+                ? 'hover:border-wqf-teal hover:-translate-y-2'
+                : 'hover:opacity-70 opacity-30 grayscale'
               }`}>
+              <div className="absolute top-0 right-0 w-2 h-2 bg-wqf-teal opacity-0 group-hover/card:opacity-100 transition-opacity"></div>
               {/* Fixed height title */}
-              <h3 className="text-2xl font-bold mb-3 text-white line-clamp-2 min-h-[64px] flex items-start">
+              <h3 className="text-2xl font-bold font-heading uppercase tracking-wide mb-3 text-white line-clamp-2 min-h-[64px] flex items-start border-b border-wqf-gray pb-2">
                 {project.title}
               </h3>
 
               {/* Fixed height description */}
-              <div className="flex-grow mb-4 min-h-[96px]">
-                <p className="text-gray-300 line-clamp-3 leading-relaxed">
+              <div className="flex-grow mb-4 min-h-[96px] mt-2">
+                <p className="text-wqf-light/80 line-clamp-3 leading-relaxed">
                   {project.description}
                 </p>
               </div>
 
               {/* Tech tags with consistent spacing */}
-              <div className="flex flex-wrap gap-2 mb-4 min-h-[32px] items-center">
+              <div className="flex flex-wrap gap-2 mb-6 min-h-[32px] items-center">
                 {project.tech.slice(0, 3).map((tech, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium border border-blue-500/30"
+                    className="px-2 py-1 bg-wqf-gray text-wqf-teal font-bold uppercase tracking-widest text-[10px] border border-wqf-gray"
                   >
                     {tech}
                   </span>
                 ))}
                 {project.tech.length > 3 && (
-                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium border border-purple-500/30">
-                    +{project.tech.length - 3} more
+                  <span className="px-2 py-1 bg-wqf-gray text-wqf-orange font-bold uppercase tracking-widest text-[10px] border border-wqf-gray">
+                    +{project.tech.length - 3} MORE
                   </span>
                 )}
               </div>
 
               {/* CTA button - only on center card */}
               {position === 'center' && (
-                <div className="px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold text-center text-white hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                  View Project Details
+                <div className="w-full text-center px-4 py-3 bg-transparent text-white font-bold uppercase tracking-widest hover:text-wqf-teal hover:bg-wqf-gray transition-all shadow-none wqf-bracket border border-transparent hover:border-wqf-teal text-xs">
+                  Inspect System
                 </div>
               )}
             </div>
@@ -187,7 +189,7 @@ const ProjectCarousel = ({ projects, openProject }) => {
       })}
 
       {/* Dots indicator with proper spacing */}
-      <div className="absolute bottom-2 flex gap-3">
+      <div className="absolute bottom-2 flex gap-4">
         {projects.map((_, index) => (
           <button
             key={index}
@@ -195,9 +197,9 @@ const ProjectCarousel = ({ projects, openProject }) => {
               e.stopPropagation();
               goToProject(index);
             }}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentIndex
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 scale-125 shadow-lg'
-                : 'bg-gray-600 hover:bg-gray-500 hover:scale-110'
+            className={`h-1 transition-all duration-300 rounded-none ${index === currentIndex
+                ? 'w-8 bg-wqf-teal'
+                : 'w-4 bg-wqf-gray hover:bg-wqf-light/50'
               }`}
           />
         ))}

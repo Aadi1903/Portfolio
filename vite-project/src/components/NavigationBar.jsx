@@ -14,32 +14,31 @@ const NavigationBar = ({ activeSection, scrollToSection, darkMode, setDarkMode }
 
   return (
     <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-40">
-      <div className={`flex items-center gap-2 p-1.5 rounded-2xl shadow-2xl backdrop-blur-lg ${
-        darkMode ? 'bg-gray-800/90' : 'bg-white/90'
-      } border ${darkMode ? 'border-gray-700' : 'border-gray-200'}`}>
+      <div className="flex items-center gap-2 p-1 bg-wqf-dark/90 backdrop-blur-lg border border-wqf-gray wqf-bracket">
         {sections.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => scrollToSection(id)}
-            className={`flex flex-col items-center p-3 rounded-xl transition-all duration-300 min-w-[70px] group ${
+            className={`flex flex-col items-center p-3 transition-colors duration-300 min-w-[70px] group ${
               activeSection === id 
-                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
-                : 'hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'text-wqf-orange bg-wqf-gray' 
+                : 'text-wqf-light/60 hover:text-wqf-teal hover:bg-wqf-gray'
             }`}
           >
             <Icon size={20} />
-            <span className="text-xs mt-1 font-medium">{label}</span>
+            <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">{label}</span>
           </button>
         ))}
         
-        <div className="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-1" />
+        <div className="h-6 w-px bg-wqf-gray mx-1" />
         
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className={`p-2.5 rounded-xl transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 group`}
+          className="p-3 transition-colors duration-300 hover:bg-wqf-gray text-wqf-light/60 hover:text-wqf-teal group flex flex-col items-center min-w-[70px]"
           title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
         >
           {darkMode ? '☀️' : '🌙'}
+          <span className="text-[10px] mt-1 font-bold uppercase tracking-widest">{darkMode ? 'LIGHT' : 'DARK'}</span>
         </button>
       </div>
     </div>

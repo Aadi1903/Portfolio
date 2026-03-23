@@ -1,111 +1,104 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { Github, Linkedin, Mail, Download, Code } from 'lucide-react';
+import { Github, Linkedin, Mail, Download, Code, ChevronDown, ArrowUpRight } from 'lucide-react';
 
-// Import components
 import Preloader from './Preloader';
-import AnimatedCloud from './AnimatedCloud';
-import ThreeDBackground from './ThreeDBackground';
-import FloatingIcons from './FloatingIcons';
 import ScrollProgress from './ScrollProgress';
-import NavigationBar from './NavigationBar';
 import CustomCursor from './CustomCursor';
-import ProjectCarousel from './ProjectCarousel';
 import ProjectModal from './ProjectModal';
+import ParticleGrid from './ParticleGrid';
+import GlitchText from './GlitchText';
+import TypewriterText from './TypewriterText';
+import ScrollReveal from './ScrollReveal';
+import TiltCard from './TiltCard';
+import TechMarquee from './TechMarquee';
+import ProjectList from './ProjectList';
+import TopNav from './TopNav';
 
-// Import data
 import { skills, projects, journey, certifications } from '../data/portfolioData';
 
+/* ─── reusable section heading ─────────────────────────────────── */
+const SectionHeading = ({ label, heading, accent }) => (
+  <ScrollReveal animation="fade-up">
+    <div className="mb-12 md:mb-16">
+      <div className="text-wqf-orange text-xs font-black uppercase tracking-widest mb-3">— {label}</div>
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-none">
+        {heading} <span className="text-wqf-teal">{accent}</span>
+      </h2>
+    </div>
+  </ScrollReveal>
+);
+
 const Portfolio = () => {
-  const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(true);
-  const [activeSection, setActiveSection] = useState('home');
-  const [modalProject, setModalProject] = useState(null);
-  const lineRef = useRef(null);
+  const [loading, setLoading]       = useState(true);
+  const [activeSection, setActive]  = useState('home');
+  const [modalProject, setModal]    = useState(null);
+  const lineRef    = useRef(null);
   const journeyRef = useRef(null);
+  const heroRef    = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoading(false), 2500);
+    return () => clearTimeout(t);
   }, []);
 
+  /* section tracker + parallax hero */
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['home', 'skills', 'projects', 'certifications', 'journey', 'about', 'contact'];
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 4;
-        }
-        return false;
-      });
-      if (current) setActiveSection(current);
-    };
-
-    // Throttled scroll handler
+    const SECTIONS = ['home','about','skills','projects','certifications','journey','contact'];
     let ticking = false;
-    const throttledScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
 
-    window.addEventListener('scroll', throttledScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', throttledScroll);
-  }, []);
-
-  // Timeline animation effect
-  useEffect(() => {
     const onScroll = () => {
-      const journeyEl = journeyRef.current;
-      const lineEl = lineRef.current;
-      if (!journeyEl || !lineEl) return;
-
-      const rect = journeyEl.getBoundingClientRect();
-      const start = Math.max(0, -rect.top + window.innerHeight * 0.15);
-      const total = rect.height - window.innerHeight * 0.3;
-      const percent = Math.min(1, Math.max(0, start / (total || 1)));
-
-      lineEl.style.transform = `scaleY(${percent})`;
-      lineEl.style.transformOrigin = 'top';
-    };
-
-    let ticking = false;
-    const handler = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          onScroll();
-          ticking = false;
+      if (ticking) return;
+      requestAnimationFrame(() => {
+        const current = SECTIONS.find(id => {
+          const el = document.getElementById(id);
+          if (!el) return false;
+          const { top, bottom } = el.getBoundingClientRect();
+          return top <= window.innerHeight * 0.5 && bottom >= window.innerHeight * 0.25;
         });
-        ticking = true;
-      }
+        if (current) setActive(current);
+
+        /* parallax — only on desktop */
+        if (heroRef.current && window.innerWidth >= 768) {
+          const y = window.pageYOffset;
+          heroRef.current.style.transform = `translateY(${y * 0.25}px)`;
+          heroRef.current.style.opacity   = `${Math.max(0, 1 - y / 650)}`;
+        }
+        ticking = false;
+      });
+      ticking = true;
     };
 
-    window.addEventListener('scroll', handler, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', handler);
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const scrollToSection = useCallback((id) => {
+  /* animated timeline fill */
+  useEffect(() => {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      requestAnimationFrame(() => {
+        if (!journeyRef.current || !lineRef.current) { ticking = false; return; }
+        const { top, height } = journeyRef.current.getBoundingClientRect();
+        const pct = Math.min(1, Math.max(0, (-top + window.innerHeight * 0.15) / (height - window.innerHeight * 0.3 || 1)));
+        lineRef.current.style.transform = `scaleY(${pct})`;
+        ticking = false;
+      });
+      ticking = true;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const scrollTo = useCallback(id => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setActiveSection(id);
+    setActive(id);
   }, []);
 
-  const openProject = useCallback((index) => {
-    setModalProject(projects[index]);
-  }, []);
-
-  const closeProject = useCallback(() => setModalProject(null), []);
-
-  const theme = darkMode ? 'dark' : 'light';
-  const bgClass = 'bg-transparent';
-  const textClass = darkMode ? 'text-white' : 'text-gray-900';
-  const cardBg = 'bg-transparent backdrop-blur-sm';
+  const openProject  = useCallback(i => setModal(projects[i]), []);
+  const closeProject = useCallback(() => setModal(null), []);
 
   return (
     <>
@@ -113,370 +106,363 @@ const Portfolio = () => {
       <ScrollProgress />
       <CustomCursor />
 
-      <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-300 relative overflow-hidden cursor-none`}>
-        <ThreeDBackground />
-        <FloatingIcons />
+      <div className="min-h-screen bg-wqf-dark text-wqf-light relative overflow-x-hidden cursor-none font-sans">
+        {/* subtle vignette — pointer-events:none is enforced in CSS */}
+        <div className="wqf-vignette fixed inset-0" />
+        <ParticleGrid />
+        <TopNav activeSection={activeSection} scrollToSection={scrollTo} />
 
-        <NavigationBar
-          activeSection={activeSection}
-          scrollToSection={scrollToSection}
-          darkMode={darkMode}
-          setDarkMode={setDarkMode}
-        />
+        {/* ════════════════ HERO ════════════════════════════════════ */}
+        <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+          {/* corner metadata — desktop only */}
+          <div className="absolute top-20 left-6 text-[10px] font-mono text-wqf-light/20 uppercase tracking-widest hidden xl:block select-none">
+            <div>28.6139° N / 77.2090° E</div>
+            <div className="mt-1 text-wqf-teal/40">New Delhi, IN</div>
+          </div>
+          <div className="absolute top-20 right-6 text-[10px] font-mono text-wqf-light/20 uppercase tracking-widest text-right hidden xl:block select-none">
+            <div>Portfolio v3.0 · 2026</div>
+            <div className="mt-1 text-wqf-teal/40">Open to Work ✦</div>
+          </div>
 
-        {/* Home Section with Animated Cloud */}
-        <section id="home" className="min-h-screen flex items-center justify-center relative">
-          <div className="relative z-10 text-center px-4 max-w-4xl">
-            <AnimatedCloud />
+          <div ref={heroRef} className="relative z-10 text-center px-4 sm:px-6 max-w-6xl w-full">
+            <ScrollReveal animation="fade-down" delay={0}>
+              <div className="flex justify-center mb-6 sm:mb-8">
+                <div className="flex items-center gap-2 px-4 py-2 bg-wqf-gray border border-wqf-teal/30 text-xs font-black uppercase tracking-widest text-wqf-teal">
+                  <span className="w-1.5 h-1.5 bg-wqf-teal rounded-full animate-pulse" />
+                  Available for opportunities · 2026
+                </div>
+              </div>
+            </ScrollReveal>
 
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-              Hi, I'm <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Aadi Jain</span>
-            </h1>
+            <ScrollReveal animation="fade-up" delay={100}>
+              <h1 className="hero-name text-white mb-1 select-none">AADI</h1>
+              <h1 className="hero-name mb-6 sm:mb-8">
+                <GlitchText text="JAIN" className="text-wqf-teal" />
+              </h1>
+            </ScrollReveal>
 
-            <p className="text-xl md:text-2xl mb-6 text-white font-light bg-black/30 backdrop-blur-sm p-4 rounded-2xl inline-block">
-              Cloud & DevOps Enthusiast | Full Stack Developer
-            </p>
+            <ScrollReveal animation="fade-up" delay={250}>
+              <div className="text-base sm:text-lg md:text-xl text-wqf-light/70 mb-8 font-mono tracking-wide">
+                <span className="text-wqf-gray">$ exec</span>{' '}
+                <TypewriterText
+                  phrases={['Cloud & DevOps Engineer','Full Stack Developer','AWS Solutions Architect','Kubernetes Enthusiast','Open Source Builder']}
+                  className="text-wqf-teal"
+                />
+              </div>
+            </ScrollReveal>
 
-            <p className="text-lg mb-8 text-gray-300 dark:text-gray-200 max-w-2xl mx-auto leading-relaxed bg-black/30 backdrop-blur-sm p-6 rounded-2xl">
-              Building reliable cloud architectures and intuitive full-stack solutions.
-            </p>
+            <ScrollReveal animation="fade-up" delay={370}>
+              <p className="text-sm sm:text-base text-wqf-light/40 max-w-xl mx-auto mb-12 leading-relaxed px-4">
+                Building reliable cloud architectures and intuitive full-stack systems —
+                turning complex infrastructure into elegant, scalable solutions.
+              </p>
+            </ScrollReveal>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg border-2 border-white/20 hoverable"
-              >
-                Get In Touch
-              </button>
-              <a
-                href="/Aadi Jain-CV.pdf" download
-                className="px-8 py-4 bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 flex items-center gap-2 hover:shadow-lg text-white hoverable"
-              >
-                <Download size={20} /> Download CV
-              </a>
-            </div>
+            <ScrollReveal animation="fade-up" delay={460}>
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-12">
+                <button onClick={() => scrollTo('contact')}
+                  className="px-8 sm:px-10 py-4 bg-wqf-teal text-wqf-dark font-black uppercase tracking-widest hover:bg-wqf-light transition-colors text-sm w-full sm:w-auto">
+                  Get In Touch
+                </button>
+                <button onClick={() => scrollTo('projects')}
+                  className="px-8 sm:px-10 py-4 bg-transparent border border-wqf-gray text-white font-black uppercase tracking-widest hover:border-wqf-teal hover:text-wqf-teal transition-colors text-sm w-full sm:w-auto">
+                  View Work →
+                </button>
+              </div>
+            </ScrollReveal>
+
+            <button onClick={() => scrollTo('about')}
+              className="flex flex-col items-center gap-1 mx-auto text-wqf-light/30 text-xs uppercase tracking-widest hover:text-wqf-teal transition-colors animate-bounce">
+              <ChevronDown size={18} />
+            </button>
           </div>
         </section>
 
-        <section id="skills" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-16">
-              Technical <span className="text-blue-500">Expertise</span>
-            </h2>
+        <TechMarquee />
 
-            <div className="grid lg:grid-cols-3 gap-8">
-              {skills.map((skillCategory, categoryIdx) => (
-                <div
-                  key={categoryIdx}
-                  className={`${cardBg} p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border ${darkMode ? 'border-gray-700' : 'border-gray-200'
-                    }`}
-                >
-                  <h3 className="text-xl font-bold mb-6 text-blue-500 text-center">
-                    {skillCategory.category}
-                  </h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    {skillCategory.items.map((skill, skillIdx) => (
-                      <div key={skillIdx} className="group flex flex-col items-center p-4 rounded-xl hover:bg-gray-800/50 transition-all duration-300 text-center">
-                        <div className="p-3 bg-blue-500/20 rounded-2xl group-hover:scale-110 group-hover:bg-blue-500/30 transition-all duration-300 mb-3">
-                          <skill.icon size={24} className="text-blue-400" />
-                        </div>
-                        <span className="font-medium text-white text-sm">{skill.name}</span>
-                      </div>
+        {/* ════════════════ ABOUT ════════════════════════════════════ */}
+        <section id="about" className="section-pad px-4 sm:px-6 bg-wqf-dark">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading label="Who I Am" heading="About" accent="Me" />
+
+            <div className="grid md:grid-cols-12 border border-wqf-gray">
+              {/* Photo */}
+              <ScrollReveal animation="fade-right" className="md:col-span-4">
+                <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wqf-gray flex flex-col items-center text-center relative group h-full">
+                  <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-teal group-hover:w-full transition-all duration-700" />
+                  <div className="relative inline-block mb-6">
+                    <img src="logo.png" alt="Aadi Jain"
+                      className="w-36 h-36 md:w-40 md:h-40 object-cover border-4 border-wqf-gray grayscale hover:grayscale-0 transition-all duration-700" />
+                    <div className="absolute -bottom-3 -right-3 w-full h-full border-2 border-wqf-teal -z-10" />
+                    <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-wqf-orange" />
+                  </div>
+                  <h3 className="text-xl font-black text-white uppercase tracking-widest mb-1">Aadi Jain</h3>
+                  <p className="text-wqf-teal font-bold tracking-widest uppercase text-xs mb-6">Cloud & DevOps · Full Stack Dev</p>
+                  <div className="flex gap-3 flex-wrap justify-center">
+                    {[
+                      { href:'https://github.com/Aadi1903', icon: Github },
+                      { href:'https://linkedin.com/in/aadi-jain01/', icon: Linkedin },
+                      { href:'mailto:aadiijain03@gmail.com', icon: Mail },
+                      { href:'https://leetcode.com/u/Aadi0324/', icon: Code },
+                    ].map(({ href, icon: Icon }, i) => (
+                      <a key={i} href={href} target="_blank" rel="noopener noreferrer"
+                        className="p-3 bg-wqf-gray border border-wqf-gray hover:border-wqf-teal hover:text-wqf-teal text-wqf-light/50 transition-all">
+                        <Icon size={18} />
+                      </a>
                     ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              </ScrollReveal>
 
-        <section id="projects" className="py-20 px-4 bg-gray-800 bg-opacity-30">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-16">
-              Featured <span className="text-blue-500">Projects</span>
-            </h2>
-            <ProjectCarousel projects={projects} openProject={openProject} />
-          </div>
-        </section>
-
-        <section id="certifications" className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">
-                My <span className="text-blue-500">Certifications</span>
-              </h2>
-              <p className="text-lg text-gray-500 dark:text-gray-400">
-                Proof of Skills & Learning
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {certifications.map((cert, idx) => (
-                <div
-                  key={idx}
-                  className={`relative group ${cardBg} p-8 rounded-2xl shadow-lg border ${cert.highlight
-                    ? 'border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                    : darkMode ? 'border-gray-700 hover:border-blue-400' : 'border-gray-200 hover:border-blue-400'
-                    } transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl overflow-hidden animate-slide-in-up`}
-                  style={{ animationDelay: `${idx * 0.15}s` }}
-                >
-                  {/* {cert.highlight && (
-                    <div className="absolute top-0 right-0 text-xs font-bold text-white bg-blue-500 py-1 px-3 rounded-bl-xl">
-                      Featured
-                    </div>
-                  )} */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="p-4 rounded-xl bg-blue-500/10 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
-                      <cert.icon size={28} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold dark:text-gray-100 leading-tight">{cert.title}</h3>
-                      <p className="text-sm text-blue-500 font-semibold mt-1">{cert.organization}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-6 leading-relaxed">
-                    {cert.description}
+              {/* Bio */}
+              <ScrollReveal animation="fade-left" className="md:col-span-8">
+                <div className="p-8 md:p-10 h-full flex flex-col gap-8 relative group">
+                  <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-700" />
+                  <p className="text-wqf-light/75 leading-relaxed text-base md:text-lg border-l-4 border-wqf-orange pl-6">
+                    I'm a 3rd-year Computer Science student who loves turning ideas into scalable cloud-powered systems.
+                    From AWS and Kubernetes to Java backend development, I craft solutions that are efficient, reliable,
+                    and meaningful. <span className="text-wqf-light font-semibold">Always learning. Always building.</span>
                   </p>
-
-                  <div className="flex items-center justify-between mt-auto">
-                    <span className="text-xs font-medium text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-800 py-1 px-3 rounded-full">
-                      {cert.issueDate}
-                    </span>
-                    {cert.credentialUrl && (
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-500 text-sm font-semibold hover:text-blue-600 dark:hover:text-blue-400 flex items-center transition-colors group/link"
-                      >
-                        View Credential <span className="ml-1 text-lg leading-none cursor-pointer group-hover/link:translate-x-1 transition-transform">→</span>
-                      </a>
-                    )}
+                  <div className="grid grid-cols-3 border border-wqf-gray">
+                    {[{ v:'10+', l:'Projects' }, { v:'3+', l:'Certifications' }, { v:'15+', l:'Technologies' }].map(({ v, l }) => (
+                      <div key={l} className="p-4 md:p-6 border-r border-wqf-gray last:border-r-0 text-center hover:bg-wqf-gray transition-colors">
+                        <div className="text-2xl md:text-3xl font-black text-wqf-teal mb-1">{v}</div>
+                        <div className="text-[10px] md:text-xs text-wqf-light/40 uppercase tracking-widest font-bold">{l}</div>
+                      </div>
+                    ))}
                   </div>
+                  <a href="/Aadi Jain-CV.pdf" download
+                    className="inline-flex w-fit items-center gap-3 px-6 py-3 border border-wqf-gray hover:border-wqf-teal hover:text-wqf-teal text-wqf-light/50 text-xs font-black uppercase tracking-widest transition-all">
+                    <Download size={14} /> Download Full CV
+                  </a>
                 </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════ SKILLS ════════════════════════════════════ */}
+        <section id="skills" className="section-pad px-4 sm:px-6 bg-[#0a0a0a] border-y border-wqf-gray">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading label="What I Know" heading="Technical" accent="Expertise" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 border border-wqf-gray">
+              {skills.map((cat, ci) => (
+                <ScrollReveal key={ci} animation="fade-up" delay={ci * 100}>
+                  <TiltCard className="h-full">
+                    <div className="p-8 border-b sm:border-r border-wqf-gray group relative overflow-hidden h-full">
+                      <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-teal group-hover:w-full transition-all duration-500" />
+                      <div className="text-4xl font-black text-wqf-gray/40 mb-4 font-mono leading-none">0{ci + 1}</div>
+                      <h3 className="text-sm font-black mb-6 text-white uppercase tracking-widest border-b border-wqf-gray pb-4">{cat.category}</h3>
+                      <div className="space-y-3">
+                        {cat.items.map((skill, si) => (
+                          <div key={si} className="flex items-center gap-3 py-1 hover:bg-wqf-gray px-2 -mx-2 transition-colors group/s">
+                            <skill.icon size={15} className="text-wqf-teal/60 flex-shrink-0 group-hover/s:text-wqf-orange transition-colors" />
+                            <span className="text-sm font-bold text-wqf-light/70 uppercase tracking-wide flex-1 group-hover/s:text-white transition-colors">{skill.name}</span>
+                            <div className="w-16 h-px bg-wqf-gray overflow-hidden flex-shrink-0">
+                              <div className="h-full bg-wqf-teal/30 group-hover/s:bg-wqf-teal transition-colors duration-500" style={{ width:`${65 + si * 7}%` }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </TiltCard>
+                </ScrollReveal>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Journey Timeline with restored animation and blur effect */}
-        <section id="journey" className="py-20 px-4 relative">
-          {/* Background blur container - only behind the timeline */}
-          {/* <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1/2 h-full bg-gradient-to-b from-blue-500/10 to-purple-600/10 backdrop-blur-xl rounded-3xl"></div>
-          </div> */}
+        {/* ════════════════ PROJECTS ══════════════════════════════════ */}
+        <section id="projects" className="section-pad px-4 sm:px-6 bg-wqf-dark">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-end justify-between mb-12 md:mb-16 flex-wrap gap-4">
+              <ScrollReveal animation="fade-right">
+                <div>
+                  <div className="text-wqf-orange text-xs font-black uppercase tracking-widest mb-3">— Selected Work</div>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-white leading-none">
+                    Featured <span className="text-wqf-teal">Projects</span>
+                  </h2>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal animation="fade-left">
+                <div className="text-right">
+                  <div className="text-4xl md:text-5xl font-black text-wqf-gray/30 font-mono">{String(projects.length).padStart(2,'0')}</div>
+                  <div className="text-xs font-black uppercase tracking-widest text-wqf-light/30">Projects</div>
+                </div>
+              </ScrollReveal>
+            </div>
+            <ProjectList projects={projects} openProject={openProject} />
+          </div>
+        </section>
 
-          <div className="max-w-4xl mx-auto relative z-10" ref={journeyRef}>
-            <h2 className="text-4xl font-bold text-center mb-16">
-              My <span className="text-blue-500">Journey</span>
-            </h2>
+        <TechMarquee />
+
+        {/* ════════════════ CERTIFICATIONS ════════════════════════════ */}
+        <section id="certifications" className="section-pad px-4 sm:px-6 bg-[#0a0a0a] border-y border-wqf-gray">
+          <div className="max-w-7xl mx-auto">
+            <SectionHeading label="My Credentials" heading="Certifications" accent="&amp; Badges" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 border border-wqf-gray">
+              {certifications.map((cert, idx) => (
+                <ScrollReveal key={idx} animation="fade-up" delay={idx * 100}>
+                  <TiltCard className="h-full">
+                    <div className={`flex flex-col p-8 border-b sm:border-r border-wqf-gray group relative overflow-hidden h-full ${cert.highlight ? 'bg-wqf-teal/5' : ''}`}>
+                      {cert.highlight && <div className="absolute top-0 left-0 right-0 h-0.5 bg-wqf-teal" />}
+                      <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-500" />
+                      <div className="flex items-start gap-4 mb-6">
+                        <div className="p-3 bg-wqf-gray text-wqf-teal group-hover:text-wqf-orange transition-colors flex-shrink-0">
+                          <cert.icon size={22} />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-black text-white uppercase tracking-wide leading-tight">{cert.title}</h3>
+                          <p className="text-xs text-wqf-teal font-bold mt-1 tracking-widest uppercase">{cert.organization}</p>
+                        </div>
+                      </div>
+                      <p className="text-wqf-light/60 text-sm leading-relaxed flex-grow mb-6">{cert.description}</p>
+                      <div className="flex items-center justify-between flex-wrap gap-3 mt-auto">
+                        <span className="text-xs font-black text-wqf-dark bg-wqf-light py-1 px-3 uppercase tracking-widest">{cert.issueDate}</span>
+                        {cert.credentialUrl && (
+                          <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-wqf-teal text-xs font-black uppercase tracking-widest hover:text-wqf-orange transition-colors">
+                            Verify <ArrowUpRight size={12} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </TiltCard>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════ JOURNEY ═══════════════════════════════════ */}
+        <section id="journey" className="section-pad px-4 sm:px-6 bg-wqf-dark border-y border-wqf-gray">
+          <div className="max-w-5xl mx-auto" ref={journeyRef}>
+            <SectionHeading label="My Story" heading="Career" accent="Journey" />
             <div className="relative">
-              {/* Central line with animation */}
-              <div
-                ref={lineRef}
-                className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-600 transition-transform duration-300"
-                style={{ transformOrigin: 'top', transform: 'scaleY(0)' }}
-              ></div>
+              {/* Timeline line — hidden on mobile */}
+              <div ref={lineRef}
+                className="absolute left-1/2 -translate-x-1/2 h-full w-px bg-wqf-teal hidden md:block"
+                style={{ transformOrigin:'top', transform:'scaleY(0)' }}
+              />
 
               {journey.map((item, idx) => (
-                <div
-                  key={idx}
-                  className={`mb-12 flex ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center animate-slide-in-up`}
-                  style={{ animationDelay: `${idx * 0.2}s` }}
-                >
-                  <div className="w-1/2"></div>
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full border-4 border-gray-900 flex items-center justify-center z-10 shadow-lg">
-                    <item.icon size={20} className="text-white" />
+                <ScrollReveal key={idx} animation={idx % 2 === 0 ? 'fade-right' : 'fade-left'} delay={idx * 80}>
+                  {/* MOBILE: simple stacked card */}
+                  <div className="mb-10 md:hidden">
+                    <TiltCard>
+                      <div className="p-6 border border-wqf-gray hover:border-wqf-teal transition-colors group relative bg-transparent">
+                        <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-500" />
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="p-2 bg-wqf-gray border border-wqf-teal">
+                            <item.icon size={14} className="text-wqf-teal" />
+                          </div>
+                          <div className="text-wqf-teal font-black text-xs tracking-widest uppercase">[ {item.year} ]</div>
+                        </div>
+                        <h3 className="text-base font-black mb-2 text-white uppercase tracking-wide">{item.title}</h3>
+                        <p className="text-wqf-light/60 leading-relaxed border-l-2 border-wqf-gray pl-3 text-sm">{item.desc}</p>
+                      </div>
+                    </TiltCard>
                   </div>
-                  <div className={`w-1/2 ${cardBg} p-6 rounded-2xl shadow-lg border ${darkMode ? 'border-gray-700' : 'border-gray-200'
-                    } ${idx % 2 === 0 ? 'ml-8' : 'mr-8'} transform hover:scale-105 transition-transform duration-300 backdrop-blur-md`}>
-                    <div className="text-blue-500 font-bold text-lg mb-2">{item.year}</div>
-                    <h3 className="text-xl font-bold mb-2 dark:text-gray-200">{item.title}</h3>
-                    <p className="text-gray-400 dark:text-gray-300 leading-relaxed">{item.desc}</p>
+
+                  {/* DESKTOP: alternating timeline */}
+                  <div className={`mb-14 hidden md:flex ${idx % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} items-center relative`}>
+                    <div className="w-1/2" />
+                    <div className="absolute left-1/2 -translate-x-1/2 w-10 h-10 z-10 bg-wqf-dark border-2 border-wqf-teal flex items-center justify-center">
+                      <item.icon size={15} className="text-wqf-teal" />
+                    </div>
+                    <TiltCard className={`w-1/2 ${idx % 2 === 0 ? 'ml-12' : 'mr-12'}`}>
+                      <div className="p-7 border border-wqf-gray hover:border-wqf-teal transition-colors group relative bg-transparent">
+                        <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-500" />
+                        <div className="text-wqf-teal font-black text-xs tracking-widest uppercase mb-2">[ {item.year} ]</div>
+                        <h3 className="text-lg font-black mb-3 text-white uppercase tracking-wide">{item.title}</h3>
+                        <p className="text-wqf-light/60 leading-relaxed border-l-2 border-wqf-gray pl-4 text-sm">{item.desc}</p>
+                      </div>
+                    </TiltCard>
                   </div>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="about" className="py-20 px-4 bg-gray-800 bg-opacity-30">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-16">
-              About <span className="text-blue-500">Me</span>
-            </h2>
-            <div className={`${cardBg} rounded-2xl shadow-xl p-8 border ${darkMode ? 'border-gray-700' : 'border-gray-200'
-              }`}>
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                  <img
-                    src="logo.png"
-                    alt="Aadi Jain"
-                    className="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-2 border-white shadow-md"
-                  />
-
-                  <h3 className="text-2xl font-bold text-center mb-4 dark:text-gray-100">Aadi Jain</h3>
-                  <p className="text-gray-400 dark:text-gray-300 text-center mb-6">
-                    Cloud & DevOps Engineer |<br />
-                    Full Stack Developer
+        {/* ════════════════ CONTACT ═══════════════════════════════════ */}
+        <section id="contact" className="section-pad px-4 sm:px-6 bg-[#0a0a0a]">
+          <div className="max-w-5xl mx-auto">
+            <SectionHeading label="Let's Talk" heading="Get In" accent="Touch" />
+            <div className="grid md:grid-cols-5 border border-wqf-gray">
+              {/* Info */}
+              <ScrollReveal animation="fade-right" className="md:col-span-2">
+                <div className="p-8 md:p-10 border-b md:border-b-0 md:border-r border-wqf-gray h-full relative group">
+                  <div className="absolute top-0 left-0 w-0 h-0.5 bg-wqf-teal group-hover:w-full transition-all duration-700" />
+                  <p className="text-wqf-light/50 text-sm leading-relaxed mb-8 border-l-4 border-wqf-gray pl-4">
+                    Open to internships, full-time roles, and exciting side projects.
+                    Always happy to have a conversation.
                   </p>
-                </div>
-                <div>
-                  <p className="text-gray-300 dark:text-gray-200 leading-relaxed mb-6">
-                    I’m a 3rd-year Computer Science student who loves turning ideas into scalable,
-                    cloud-powered systems. From AWS and Kubernetes to Java backend development,
-                    I enjoy crafting solutions that are efficient, reliable, and meaningful.
-                    Always learning. Always building.
-                  </p>
-                  <div className="flex justify-center gap-6">
-                    <a href="https://github.com/Aadi1903" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-green-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
-                      <Github size={24} className="text-white" />
-                    </a>
-                    <a href="https://www.linkedin.com/in/aadi-jain01/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-blue-600 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
-                      <Linkedin size={24} className="text-white" />
-                    </a>
-                    <a href="mailto:aadiijain03@gmail.com" className="group p-4 rounded-full bg-gray-700 hover:bg-red-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
-                      <Mail size={24} className="text-white" />
-                    </a>
-                    <a href="https://leetcode.com/u/Aadi0324/" target="_blank" rel="noopener noreferrer" className="group p-4 rounded-full bg-gray-700 hover:bg-orange-500 transition-all duration-300 transform hover:scale-110 hover:shadow-lg hoverable">
-                      <Code size={24} className="text-white" />
-                    </a>
-
+                  <div className="space-y-4">
+                    {[
+                      { label:'Email',    value:'aadiijain03@gmail.com',   href:'mailto:aadiijain03@gmail.com' },
+                      { label:'LinkedIn', value:'/in/aadi-jain01',          href:'https://linkedin.com/in/aadi-jain01/' },
+                      { label:'GitHub',   value:'/Aadi1903',                href:'https://github.com/Aadi1903' },
+                    ].map(({ label, value, href }) => (
+                      <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                        className="flex items-start gap-3 group/l hover:text-wqf-teal transition-colors">
+                        <span className="text-xs font-black uppercase tracking-widest text-wqf-gray w-20 flex-shrink-0 pt-0.5">{label}</span>
+                        <span className="text-xs text-wqf-light/50 group-hover/l:text-wqf-teal transition-colors font-mono flex items-center gap-1 break-all">
+                          {value} <ArrowUpRight size={10} className="flex-shrink-0" />
+                        </span>
+                      </a>
+                    ))}
                   </div>
                 </div>
+              </ScrollReveal>
 
-              </div>
+              {/* Form */}
+              <ScrollReveal animation="fade-left" className="md:col-span-3">
+                <form action="https://api.web3forms.com/submit" method="POST" className="p-8 md:p-10 space-y-8 relative group">
+                  <div className="absolute bottom-0 right-0 w-0 h-0.5 bg-wqf-orange group-hover:w-full transition-all duration-700" />
+                  <input type="hidden" name="access_key" value="950c6c6e-ae89-419a-adaf-9a0629049476" />
+                  <div className="grid sm:grid-cols-2 gap-8">
+                    {[{f:'name',t:'text'},{f:'email',t:'email'}].map(({f,t}) => (
+                      <div key={f}>
+                        <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/30">{f}</label>
+                        <input type={t} name={f} required
+                          className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white placeholder-wqf-gray/40 font-mono text-sm caret-wqf-orange"
+                          placeholder={`Your ${f}`} />
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <label className="block mb-2 text-[10px] font-black uppercase tracking-widest text-wqf-light/30">Message</label>
+                    <textarea rows="4" name="message" required
+                      className="w-full px-0 py-3 bg-transparent border-b-2 border-wqf-gray focus:outline-none focus:border-wqf-teal transition-colors text-white resize-none placeholder-wqf-gray/40 font-mono text-sm caret-wqf-orange"
+                      placeholder="Your message..." />
+                  </div>
+                  <button type="submit"
+                    className="w-full px-10 py-4 bg-wqf-teal text-wqf-dark font-black uppercase tracking-widest hover:bg-wqf-light transition-colors text-sm flex items-center justify-center gap-3 group/btn">
+                    Transmit Message
+                    <span className="group-hover/btn:translate-x-1 transition-transform inline-block">→</span>
+                  </button>
+                </form>
+              </ScrollReveal>
             </div>
           </div>
         </section>
 
-        <section id="contact" className="py-20 px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-16">
-              Get In <span className="text-blue-500">Touch</span>
-            </h2>
-
-            <div
-              className={`${cardBg} p-8 rounded-2xl shadow-xl border ${darkMode ? "border-gray-700" : "border-gray-200"
-                }`}
-            >
-              {/* Web3Forms FORM START */}
-              <form
-                action="https://api.web3forms.com/submit"
-                method="POST"
-                className="space-y-6"
-              >
-                {/* REQUIRED HIDDEN ACCESS KEY */}
-                <input
-                  type="hidden"
-                  name="access_key"
-                  value="950c6c6e-ae89-419a-adaf-9a0629049476"
-                />
-
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-                    placeholder="Your name"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300`}
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                <div>
-                  <label className="block mb-3 font-semibold text-lg">Message</label>
-                  <textarea
-                    rows="6"
-                    name="message"
-                    required
-                    className={`w-full px-4 py-4 rounded-xl ${darkMode ? "bg-gray-700" : "bg-gray-100"
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 resize-none`}
-                    placeholder="Your message..."
-                  ></textarea>
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 shadow-lg hoverable"
-                >
-                  Send Message
-                </button>
-              </form>
-              {/* Web3Forms FORM END */}
-
+        {/* ════════════════ FOOTER ════════════════════════════════════ */}
+        <footer className="bg-wqf-dark py-8 border-t border-wqf-gray">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-7 h-7 border border-wqf-teal flex items-center justify-center font-black text-wqf-teal text-xs">AJ</div>
+              <span className="text-wqf-light/30 text-xs font-black uppercase tracking-widest">Aadi Jain © 2026</span>
             </div>
+            <p className="text-wqf-light/15 text-xs uppercase tracking-widest">React & Tailwind CSS</p>
+            <GlitchText text="@AADI1903" className="text-wqf-gray/40 text-xs font-black tracking-widest uppercase" />
           </div>
-
-        </section>
-
-
-
-        <footer className={`${cardBg} py-8 text-center border-t ${darkMode ? 'border-gray-700' : 'border-gray-200'
-          }`}>
-          <p className="text-gray-400">
-            © 2025 Aadi Jain. Built with React & Tailwind CSS
-          </p>
         </footer>
       </div>
 
       <ProjectModal project={modalProject} onClose={closeProject} />
-
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes slide-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33% { transform: translateY(-10px) rotate(-1deg); }
-          66% { transform: translateY(-5px) rotate(1deg); }
-        }
-        @keyframes draw {
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-        .animate-draw {
-          animation: draw 2s ease-in-out forwards;
-        }
-        .animate-slide-in-up {
-          animation: slide-in-up 0.6s ease-out forwards;
-        }
-      `}</style>
     </>
   );
 };

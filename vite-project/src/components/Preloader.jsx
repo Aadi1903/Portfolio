@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud } from 'lucide-react';
 
 const Preloader = ({ loading }) => {
   const [progress, setProgress] = useState(0);
@@ -22,29 +21,21 @@ const Preloader = ({ loading }) => {
   if (!loading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900">
-      <div className="text-center">
-        <div className="relative w-32 h-32 mx-auto mb-8">
-          <svg className="animate-spin" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" strokeWidth="8"/>
-            <circle 
-              cx="50" cy="50" r="45" fill="none" 
-              stroke="url(#gradient)" strokeWidth="8"
-              strokeDasharray={`${progress * 2.83} 283`}
-              strokeLinecap="round"
-              transform="rotate(-90 50 50)"
-            />
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%">
-                <stop offset="0%" stopColor="#3b82f6" />
-                <stop offset="100%" stopColor="#8b5cf6" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <Cloud className="absolute inset-0 m-auto w-12 h-12 text-blue-500 animate-pulse" />
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-wqf-dark font-heading">
+      <div className="w-64">
+        <div className="flex justify-between items-end mb-2">
+          <div className="text-wqf-light/60 text-xs font-bold uppercase tracking-widest">System Boot Sequence</div>
+          <div className="text-wqf-teal font-bold tracking-widest text-sm">{progress}%</div>
         </div>
-        <div className="text-2xl font-bold text-white mb-2">{progress}%</div>
-        <div className="text-gray-400">Loading Portfolio...</div>
+        <div className="h-0.5 w-full bg-wqf-gray overflow-hidden">
+          <div 
+            className="h-full bg-wqf-teal transition-all duration-75"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="mt-4 animate-glitch text-wqf-orange text-[10px] tracking-widest uppercase">
+          [Initializing Layout Protocols...]
+        </div>
       </div>
     </div>
   );

@@ -90,13 +90,15 @@ const CustomCursor = () => {
       
       // Transform effects with smooth transitions
       if (isHovering) {
-        bigBall.style.transform = 'scale(1.8)';
-        bigBall.style.opacity = '0.6';
-        smallBall.style.transform = 'scale(1.3)';
+        bigBall.style.transform = 'scale(1.5) rotate(45deg)';
+        bigBall.style.borderColor = 'var(--color-wqf-orange)';
+        smallBall.style.transform = 'scale(1.5)';
+        smallBall.style.backgroundColor = 'var(--color-wqf-teal)';
       } else {
-        bigBall.style.transform = 'scale(1)';
-        bigBall.style.opacity = '0.4';
+        bigBall.style.transform = 'scale(1) rotate(0deg)';
+        bigBall.style.borderColor = 'var(--color-wqf-light)';
         smallBall.style.transform = 'scale(1)';
+        smallBall.style.backgroundColor = 'var(--color-wqf-orange)';
       }
       
       rafRef.current = requestAnimationFrame(animateCursor);
@@ -111,16 +113,10 @@ const CustomCursor = () => {
 
   return (
     <>
-      <div ref={bigBallRef} className="fixed w-8 h-8 pointer-events-none z-[1000] mix-blend-difference transition-all duration-150 ease-out opacity-40">
-        <svg height="30" width="30">
-          <circle cx="15" cy="15" r="7" strokeWidth="0" className="fill-white"></circle>
-        </svg>
+      <div ref={bigBallRef} className="fixed w-6 h-6 border cursor-none border-wqf-light/40 pointer-events-none z-[1000] transition-all duration-150 ease-out" style={{ transformOrigin: 'center' }}>
       </div>
       
-      <div ref={smallBallRef} className="fixed w-3 h-3 pointer-events-none z-[1001] mix-blend-difference transition-all duration-100 ease-out">
-        <svg height="10" width="10">
-          <circle cx="5" cy="5" r="2" strokeWidth="0" className="fill-white"></circle>
-        </svg>
+      <div ref={smallBallRef} className="fixed w-1.5 h-1.5 bg-wqf-orange pointer-events-none z-[1001] transition-all duration-100 ease-out" style={{ transformOrigin: 'center' }}>
       </div>
     </>
   );

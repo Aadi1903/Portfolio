@@ -1,2 +1,98 @@
 @import "tailwindcss";
-@import "./mobile.css";
+
+@theme {
+  --color-wqf-dark:   #111111;
+  --color-wqf-light:  #DADADA;
+  --color-wqf-teal:   #5C939F;
+  --color-wqf-orange: #ED6D40;
+  --color-wqf-gray:   #1E1E1E;
+
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans:    'Space Grotesk', system-ui, sans-serif;
+
+  --animate-slide-up: slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@layer base {
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    background-color: var(--color-wqf-dark);
+    color: var(--color-wqf-light);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Smooth scrolling */
+  html { scroll-behavior: smooth; }
+
+  /* Responsive font scaling */
+  h1 { line-height: 1; }
+  img { max-width: 100%; height: auto; }
+}
+
+@layer utilities {
+  /* Corner-bracket accent (buttons / cards) */
+  .wqf-bracket {
+    position: relative;
+  }
+  .wqf-bracket::before,
+  .wqf-bracket::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-wqf-teal);
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  .wqf-bracket::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+  .wqf-bracket::after  { bottom: 0; right: 0; border-left: none; border-top: none; }
+  .wqf-bracket:hover::before,
+  .wqf-bracket:hover::after {
+    width: 14px; height: 14px;
+    border-color: var(--color-wqf-orange);
+  }
+
+  /* Viewport vignette — must stay pointer-events:none always */
+  .wqf-vignette {
+    box-shadow: inset 0 0 180px rgba(0, 60, 200, 0.04);
+    pointer-events: none !important;
+    z-index: 48;
+  }
+
+  /* Responsive hero text */
+  .hero-name {
+    font-size: clamp(3.5rem, 12vw, 11rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  /* Section padding helper */
+  .section-pad { padding-top: 6rem; padding-bottom: 6rem; }
+  @media (min-width: 768px) { .section-pad { padding-top: 8rem; padding-bottom: 8rem; } }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--color-wqf-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--color-wqf-gray); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-wqf-teal); }
+}
+
+@keyframes slide-up {
+  0%   { transform: translateY(32px); opacity: 0; }
+  100% { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes glitch {
+  0%   { transform: translate(0); }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(-1px, -1px); }
+  60%  { transform: translate(2px, 1px); }
+  80%  { transform: translate(1px, -1px); }
+  100% { transform: translate(0); }
+}
