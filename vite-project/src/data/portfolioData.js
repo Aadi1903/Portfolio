@@ -113,7 +113,7 @@ export const certifications = [
   {
     title: "AWS Certified Solutions Architect – Associate",
     organization: "Amazon Web Services (AWS)",
-    issueDate: "Aug 2025",
+    issueDate: "Feb 2026",
     description: "Validates expertise in designing and deploying scalable, highly available, and fault-tolerant systems on AWS.",
     credentialUrl: "#",
     icon: Cloud,
@@ -122,7 +122,7 @@ export const certifications = [
   {
     title: "Microsoft Certified: Azure Fundamentals",
     organization: "Microsoft",
-    issueDate: "Jan 2025",
+    issueDate: "Nov 2025",
     description: "Foundational knowledge of cloud services and how those services are provided with Microsoft Azure.",
     credentialUrl: "#",
     icon: Zap,
@@ -131,7 +131,7 @@ export const certifications = [
   {
     title: "Docker Certified Associate (DCA)",
     organization: "Docker",
-    issueDate: "Nov 2024",
+    issueDate: "Sep 2025",
     description: "Demonstrates proficiency in Docker containerization, orchestration, and security.",
     credentialUrl: "#",
     icon: Boxes,
