@@ -16,7 +16,7 @@ const TopNav = ({ activeSection, scrollToSection }) => {
     { id: 'about',          label: 'About' },
     { id: 'skills',         label: 'Skills' },
     { id: 'projects',       label: 'Work' },
-    { id: 'certifications', label: 'Certs' },
+    // { id: 'certifications', label: 'Certs' },
     { id: 'journey',        label: 'Journey' },
     { id: 'contact',        label: 'Contact' },
   ];

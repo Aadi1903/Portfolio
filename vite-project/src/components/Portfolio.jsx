@@ -44,7 +44,7 @@ const Portfolio = () => {
 
   /* section tracker + parallax hero */
   useEffect(() => {
-    const SECTIONS = ['home', 'about', 'skills', 'projects', 'certifications', 'journey', 'contact'];
+    const SECTIONS = ['home', 'about', 'skills', 'projects', /* 'certifications', */ 'journey', 'contact'];
     let ticking = false;
 
     const onScroll = () => {
@@ -331,7 +331,7 @@ const Portfolio = () => {
         <TechMarquee />
 
         {/* ════════════════ CERTIFICATIONS ════════════════════════════ */}
-        <section id="certifications" className="section-pad px-4 sm:px-6 bg-[#0a0a0a] border-y border-wqf-gray">
+        {/* <section id="certifications" className="section-pad px-4 sm:px-6 bg-[#0a0a0a] border-y border-wqf-gray">
           <div className="max-w-7xl mx-auto">
             <SectionHeading label="My Credentials" heading="Certifications" accent="&amp; Badges" />
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 border border-wqf-gray">
@@ -360,7 +360,7 @@ const Portfolio = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* ════════════════ JOURNEY ═══════════════════════════════════ */}
         <section id="journey" className="section-pad px-4 sm:px-6 bg-wqf-dark border-y border-wqf-gray">

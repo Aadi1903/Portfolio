@@ -38,66 +38,91 @@ export const skills = [
 
 export const projects = [
   {
-    title: 'End-to-End CI/CD Pipeline with Jenkins & Kubernetes',
-    description: "Automated full-stack CI/CD pipeline with security scanning, containerization, and K8's deployment",
-    detailedDescription: "Designed and implemented a complete CI/CD pipeline using Jenkins, Docker, and Kubernetes. Built a scalable infrastructure with dedicated virtual machines for Jenkins, SonarQube, and Nexus. Automated code integration, testing, security scanning, artifact management, and deployment workflows. Integrated tools like Trivy for vulnerability scanning and SonarQube for code quality analysis. Deployed containerized applications to a Kubernetes cluster with RBAC and secure authentication mechanisms.",
+    title: 'CloudCostLens – Cloud Architecture Recommendation & Cost Optimization Platform',
+    description: "Production-grade cloud recommendation platform with Terraform automation, Kubernetes deployment, DevSecOps pipeline, and scalability testing",
+    detailedDescription: "Engineered a full-stack cloud architecture recommendation platform using Spring Boot and React that suggests AWS services based on cost, scalability, and operational requirements. Automated infrastructure provisioning through Terraform workflows with auto-destroy protection to prevent unnecessary cloud spending. Implemented an enterprise-grade DevSecOps CI/CD pipeline integrating multiple security scanning tools across SAST, SCA, IaC, container, and DAST stages. Deployed containerized microservices on Kubernetes with Prometheus and Grafana observability, Ansible automation, and Docker multi-stage builds. Conducted k6 load and stress testing achieving ~1,200 requests/sec with 1,000 concurrent users while identifying infrastructure bottlenecks through ramp-up testing at 3,000 VUs.",
+
     tech: [
-      "Jenkins", "Docker", "Kubernetes", "SonarQube", "Nexus", "Trivy", "Linux", "Git"
+      "Java", "Spring Boot", "React.js", "MySQL", "Terraform", "Docker", "Kubernetes", "Jenkins", "Ansible",
+      "Prometheus", "Grafana", "k6", "Trivy", "Checkov", "OWASP ZAP", "Semgrep", "AWS", "Render"
     ],
+
+    github: 'https://github.com/Aadi1903/CloudCostLens',
+    demo: 'https://cloudcostlens.onrender.com',
+
+    features: [
+      "AWS cloud architecture recommendation engine",
+      "One-click Terraform provisioning workflow",
+      "Automated resource cleanup and auto-destroy protection",
+      "Enterprise DevSecOps CI/CD pipeline",
+      "Integrated SAST, SCA, IaC, DAST, and container security scanning",
+      "Docker multi-stage containerization",
+      "Kubernetes-based orchestration and deployment",
+      "Prometheus and Grafana observability dashboards",
+      "Ansible-based infrastructure automation",
+      "k6 load and stress testing up to 3,000 virtual users",
+      "Scalability analysis with throughput and latency monitoring",
+      "Real-time backend and infrastructure monitoring"
+    ]
+
+  },
+  {
+    title: 'Guidr – Serverless Event-Driven AWS Platform',
+    description: "Serverless microservices platform built on AWS with event-driven architecture, distributed tracing, observability, and automated CI/CD workflows",
+    detailedDescription: "Architected and deployed a production-grade serverless platform on AWS integrating 15+ managed services including Lambda, API Gateway, DynamoDB, Cognito, SQS, SNS, SES, EventBridge, CloudFront, S3, X-Ray, CloudWatch RUM, Systems Manager, Rekognition, and AWS CDK. Designed an event-driven microservices architecture enabling asynchronous communication and scalable notification workflows across multiple AWS services. Implemented full-stack observability using AWS X-Ray distributed tracing and CloudWatch RUM for real-user monitoring, enabling end-to-end request visibility from frontend interactions to backend services and DynamoDB. Automated infrastructure provisioning and deployment pipelines using AWS CDK, Docker, CodePipeline, and CodeBuild, enabling scalable cloud-native deployments with near-zero operational overhead within AWS Free Tier limits.",
+
+    tech: [
+      "AWS Lambda", "API Gateway", "DynamoDB", "Cognito", "SQS", "SNS", "SES", "EventBridge", "CloudFront",
+      "S3", "AWS X-Ray", "CloudWatch RUM", "AWS CDK", "Docker", "CodePipeline", "CodeBuild", "React.js", "Java"
+    ],
+
+    github: 'https://github.com/Aadi1903/Guidr',
+    demo: 'https://d3k03ku5qbyly4.cloudfront.net',
+
+    features: [
+      "Serverless event-driven microservices architecture",
+      "Integration of 15+ AWS managed services",
+      "Distributed tracing using AWS X-Ray",
+      "Real-user frontend monitoring with CloudWatch RUM",
+      "Asynchronous communication using SQS, SNS, and EventBridge",
+      "Automated email notification workflows using SES",
+      "Secure authentication and authorization with Cognito",
+      "Scalable object storage and CDN delivery using S3 and CloudFront",
+      "Infrastructure as Code using AWS CDK (Java)",
+      "Automated CI/CD pipeline using CodePipeline and CodeBuild",
+      "Docker-based containerized Lambda packaging",
+      "Cloud-native deployment optimized for AWS Free Tier"
+    ]
+
+  },
+  {
+    title: 'Enterprise DevSecOps CI/CD Pipeline with Kubernetes',
+    description: "Enterprise-grade DevSecOps pipeline integrating CI/CD automation, Kubernetes deployment, security scanning, and container orchestration",
+    detailedDescription: "Designed and implemented an enterprise-grade DevSecOps CI/CD pipeline using Jenkins, Docker, Kubernetes, SonarQube, Nexus, and Trivy to automate code integration, testing, security validation, artifact management, and deployment workflows. Configured Kubernetes clusters with RBAC-based access control and secure authentication mechanisms for container orchestration and scalable deployments. Integrated multiple security and quality analysis stages including vulnerability scanning, code quality inspection, and artifact lifecycle management to improve deployment reliability and reduce manual intervention across the software delivery pipeline.",
+
+    tech: [
+      "Jenkins", "Docker", "Kubernetes", "SonarQube", "Nexus", "Trivy",
+      "Linux", "Git", "CI/CD", "RBAC"
+    ],
+
     github: 'https://github.com/Aadi1903/GameReview',
     demo: '#',
+
     features: [
-      "Automated CI/CD pipeline (build, test, deploy)",
-      "Kubernetes cluster setup and deployment",
-      "Docker-based containerization",
-      "Code quality analysis using SonarQube",
-      "Vulnerability scanning using Trivy",
-      "Artifact management with Nexus",
+      "End-to-end DevSecOps CI/CD automation",
+      "Jenkins-based build, test, and deployment workflows",
+      "Docker-based application containerization",
+      "Kubernetes cluster deployment and orchestration",
       "Role-Based Access Control (RBAC) implementation",
+      "Code quality analysis using SonarQube",
+      "Artifact lifecycle management using Nexus",
+      "Container vulnerability scanning using Trivy",
       "Secure authentication between Jenkins and Kubernetes",
-      "Email notifications for pipeline status",
-      "Infrastructure setup using virtual machines"
-    ],
-  },
-  {
-    title: "CloudCostLens – AWS Services Recommendation Tool",
-    description: "Rule-based AWS services recommendation and cost-planning platform",
-    detailedDescription: "Developed a full-stack web application that simplifies AWS architecture selection using a deterministic, rule-based approach. The system analyzes user requirements such as scalability, availability, workload type, and budget to recommend optimized cloud architectures. Includes a clear architecture flow representation to explain service dependencies and cost–performance trade-offs. The application is containerized using Docker, with infrastructure planning defined through Terraform for consistent and reproducible deployments.",
-    tech: [
-      "Spring Boot",
-      "React",
-      "Docker",
-      "Terraform",
-      "Rule-Based Logic",
-      "REST APIs",
-      "Git/GitHub"
-    ],
-    github: "https://github.com/Aadi1903/CloudCostLens",
-    demo: "https://cloudcostlens.onrender.com",
-    features: [
-      "Requirement-driven AWS Services recommendations",
-      "Rule-based decision engine for service selection",
-      "Architecture flow visualization with cost trade-offs",
-      "Containerized deployment using Docker",
-      "Infrastructure planning using Terraform",
-      "Clean and scalable full-stack design"
+      "Automated deployment from Git commits to Kubernetes",
+      "Scalable and reliable cloud-native deployment workflow",
+      "Reduced manual deployment and validation efforts"
     ]
-  },
-  {
-    title: "SpeakPeak AI Mock Interview",
-    description: "AI-powered mock interview platform with real-time voice interaction and personalized feedback",
-    detailedDescription: "Developed a full-stack AI mock interview platform using Next.js 14, TypeScript, and VAPI voice AI. The system conducts realistic technical interviews with voice interaction, provides real-time feedback, and generates comprehensive performance analysis. Features include multi-language support, role-based interviews, and detailed analytics dashboard.",
-    tech: ["Next.js 14", "TypeScript", "Tailwind CSS", "VAPI AI", "WebRTC", "Node.js", "MongoDB", "Shadcn/ui"],
-    github: "https://github.com/Aadi1903/SpeakPeak",
-    demo: "#",
-    features: [
-      "Real-time voice AI interviews",
-      "Personalized feedback generation",
-      "Multi-language support",
-      "Technical & behavioral questions",
-      "Performance analytics dashboard",
-      "Role-based interview scenarios"
-    ],
+
   },
 ];
 
